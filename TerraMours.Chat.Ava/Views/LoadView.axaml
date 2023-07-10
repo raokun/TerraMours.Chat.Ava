@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TerraMours.Chat.Ava.Views.LoadView"
+        x:DataType="vm:LoadViewModel"
+        Title="Loading..."
+        Width="300"
+        Height="150"
+        SystemDecorations="None"
+        WindowStartupLocation="CenterScreen">
+	<Design.DataContext>
+		<vm:LoadViewModel />
+	</Design.DataContext>
+	<Grid>
+		<Image
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Source="../Assets/loading.png"
+            Stretch="UniformToFill"
+            Opacity="0.5"/>
+		<StackPanel
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Orientation="Vertical"
+            Spacing="10">
+			<TextBlock
+                Text="Loading..."
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Foreground="White"
+                Background="Transparent"/>
+			<ProgressBar
+                x:Name="progressBar"
+                HorizontalAlignment="Center"
+                Minimum="0"
+                Maximum="100"
+                Value="{Binding Progress}"
+                Width="200"
+				Height="20"
+                Background="Transparent">
+				<ProgressBar.Foreground>
+					<SolidColorBrush Color="White"/>
+				</ProgressBar.Foreground>
+			</ProgressBar>
+		</StackPanel>
+	</Grid>
+</Window>
