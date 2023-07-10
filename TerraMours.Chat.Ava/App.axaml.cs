@@ -16,7 +16,15 @@ namespace TerraMours.Chat.Ava {
                     DataContext = new LoadViewModel(),
                 };
                 desktop.MainWindow = load;
-                
+                VMLocator.LoadViewModel.ToMainAction = () =>
+                {
+                    desktop.MainWindow = new MainWindow()
+                    {
+                        DataContext = new MainWindowViewModel(),
+                    };
+                    desktop.MainWindow.Show();
+                    load.Close();
+                };
 
             }
 

@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System;
 using System.Threading.Tasks;
 
 namespace TerraMours.Chat.Ava.ViewModels {
@@ -9,7 +10,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             get => _progress;
             set => this.RaiseAndSetIfChanged(ref _progress, value);
         }
-
+        public Action ToMainAction { get; set; }
         public LoadViewModel() {
             // 在适当的时机更新进度条的值
             UpdateProgress();
@@ -21,6 +22,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 Progress = i;
                 await Task.Delay(100); // 延迟一段时间，以模拟加载过程
             }
+            ToMainAction?.Invoke();
         }
     }
 
