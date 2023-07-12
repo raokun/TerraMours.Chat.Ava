@@ -32,4 +32,33 @@
 		<StyleInclude Source="avares://TerraMours.Chat.Ava/Assets/Styles.axaml" />
 		<dialogHostAvalonia:DialogHostStyles />
 	</Application.Styles>
+	<Application.Resources>
+		<Color x:Key="SystemAccentColor">rgb(155, 138, 255)</Color>
+		<Color x:Key="SystemAccentColorDark1">rgb(155, 138, 255)</Color>
+		<Color x:Key="SystemAltMediumLowColor">rgb(52, 53, 65)</Color>
+		<Color x:Key="ApplicationPageBackgroundThemeBrush">rgb(52, 53, 65)</Color>
+		<Color x:Key="ControlStrokeColorDefaultBrush">rgb(94, 95, 109)</Color>
+		<Color x:Key="PaneBackground">rgb(52, 53, 65)</Color>
+		<Color x:Key="ButtonBackground">rgb(52, 53, 65)</Color>
+		<Color x:Key="ButtonForeground">rgb(214, 215, 219)</Color>
+		<Color x:Key="ButtonBackgroundPointerOver">rgb(84, 85, 99)</Color>
+		<Color x:Key="ToggleButtonBackground">rgb(52, 53, 65)</Color>
+		<Color x:Key="ToggleButtonForeground">rgb(214, 215, 219)</Color>
+		<Color x:Key="ToggleButtonBackgroundPointerOver">rgb(84, 85, 99)</Color>
+		<Color x:Key="ToggleButtonBackgroundChecked">rgb(52, 53, 65)</Color>
+		<Color x:Key="ToggleButtonBackgroundCheckedPointerOver">rgb(84, 85, 99)</Color>
+		<Color x:Key="DividerStrokeColorDefaultBrush">rgb(52, 53, 65)</Color>
+		<Color x:Key="MenuFlyoutPresenterBackground">rgb(52, 53, 65)</Color>
+		<Color x:Key="MenuFlyoutItemBackgroundPointerOver">rgb(74, 75, 89)</Color>
+		<Color x:Key="MenuFlyoutPresenterBorderBrush">rgb(44, 44, 54)</Color>
+		<Color x:Key="ComboBoxDropDownBackground">rgb(52, 53, 65)</Color>
+		<Color x:Key="ContentDialogBackground">rgb(42, 43, 55)</Color>
+		<Color x:Key="SolidBackgroundFillColorBase">rgb(52, 53, 65)</Color>
+		<Color x:Key="SolidBackgroundFillColorSecondary">rgb(52, 53, 65)</Color>
+		<Color x:Key="TextControlButtonForeground">rgb(126, 128, 145)</Color>
+		<Color x:Key="SystemControlForegroundBaseHighBrush">rgb(220, 220, 220)</Color>
+		<Color x:Key="TextOnAccentFillColorPrimary">rgb(220, 220, 220)</Color>
+		<Color x:Key="TextFillColorPrimary">rgb(220, 220, 220)</Color>
+		<Color x:Key="DataGridRowGroupHeaderBackgroundBrush">rgb(32, 33, 35)</Color>
+	</Application.Resources>
 </Application>

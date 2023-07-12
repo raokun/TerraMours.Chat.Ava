@@ -11,6 +11,10 @@ namespace TerraMours.Chat.Ava {
         }
 
         public override void OnFrameworkInitializationCompleted() {
+            //添加共享资源
+            var VMLocator = new VMLocator();
+            Resources.Add("VMLocator", VMLocator);
+
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
                 var load= new LoadView {
                     DataContext = new LoadViewModel(),

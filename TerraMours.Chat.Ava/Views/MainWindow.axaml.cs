@@ -5,7 +5,6 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System;
 using System.IO;
-using TerraMours.Chat.Ava.Views.Class;
 using FluentAvalonia.UI.Controls;
 using TerraMours.Chat.Ava.ViewModels;
 using System.Globalization;

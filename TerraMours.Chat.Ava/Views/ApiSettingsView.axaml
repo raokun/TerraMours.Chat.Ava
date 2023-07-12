@@ -2,7 +2,130 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="980" d:DesignHeight="980"
+			 xmlns:local="using:TerraMours.Chat.Ava"
+			 xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+			 x:DataType="vm:MainWindowViewModel"
              x:Class="TerraMours.Chat.Ava.Views.ApiSettingsView">
-  Welcome to Avalonia!
+	<Grid Name="ApiSettings" Classes="ApiSettings" HorizontalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="280" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="Auto" />
+		</Grid.ColumnDefinitions>
+
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="API Parameters" HorizontalAlignment="Center" Margin="0,10,0,30"/>
+
+		<TextBlock Grid.Row="1" Grid.Column="0" Text="model" TextAlignment="Right" />
+		<ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding ModelList}"  SelectedItem="{Binding ApiModel}"/>
+
+		<TextBlock Grid.Row="2" Grid.Column="3" Text="Enable" Margin="8,0"/>
+		<TextBlock Grid.Row="2" Grid.Column="4" Text="Default" />
+
+		<TextBlock Grid.Row="3" Grid.Column="0" Text="max_tokens" TextAlignment="Right" />
+		<Slider Grid.Row="3" Grid.Column="1" IsSnapToTickEnabled="True" Minimum="1" Maximum="32768" TickFrequency="1" Value="{Binding ApiMaxTokens}"/>
+		<local:CustomNumericUpDown Grid.Row="3" Grid.Column="2" FormatString="{}{0:#0}" Minimum="1" Maximum="32768" Increment="1" Value="{Binding ApiMaxTokens}" />
+		<ToggleSwitch Grid.Row="3" Grid.Column="3" IsChecked="{Binding ApiMaxTokensIsEnable}"/>
+		<TextBlock Grid.Row="3" Grid.Column="4" Text="inf" />
+
+		<TextBlock Grid.Row="4" Grid.Column="0" Text="temperature" TextAlignment="Right" />
+		<Slider Grid.Row="4" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="0.1" Minimum="0" Maximum="2" Value="{Binding ApiTemperature}" />
+		<local:CustomNumericUpDown Grid.Row="4" Grid.Column="2" FormatString="{}{0:#0.0}" Minimum="0" Maximum="2" Increment="0.1" Value="{Binding ApiTemperature}"/>
+		<ToggleSwitch Grid.Row="4" Grid.Column="3" IsChecked="{Binding ApiTemperatureIsEnable}" />
+		<TextBlock Grid.Row="4" Grid.Column="4" Text="1" />
+
+		<TextBlock Grid.Row="5" Grid.Column="0" Text="top_p" TextAlignment="Right" />
+		<Slider Grid.Row="5" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="0.01" Minimum="0" Maximum="1" Value="{Binding ApiTopP}" />
+		<local:CustomNumericUpDown Grid.Row="5" Grid.Column="2" FormatString="{}{0:#0.00}" Minimum="0" Maximum="1" Increment="0.01" Value="{Binding ApiTopP}" />
+		<ToggleSwitch Grid.Row="5" Grid.Column="3" IsChecked="{Binding ApiTopPIsEnable}" />
+		<TextBlock Grid.Row="5" Grid.Column="4" Text="1" />
+
+		<!--	<TextBlock Grid.Row="6" Grid.Column="0" Text="n" TextAlignment="Right" />
+		<Slider Grid.Row="6" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Maximum="4096" Value="{Binding ApiN}" />
+		<local:CustomNumericUpDown Grid.Row="6" Grid.Column="2" FormatString="{}{0:#0}" Minimum="1" Maximum="4096" Increment="1" Value="{Binding ApiN}" />
+		<ToggleSwitch Grid.Row="6" Grid.Column="3" IsChecked="{Binding ApiNIsEnable}" />
+		<TextBlock Grid.Row="6" Grid.Column="4" Text="1" />-->
+
+		<!--	<TextBlock Grid.Row="7" Grid.Column="0" Text="logprobs" IsEnabled="False" TextAlignment="Right"/>
+		<Slider Grid.Row="7" Grid.Column="1" IsEnabled="False" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Maximum="5" Value="{Binding ApiLogprobs}" />
+		<local:CustomNumericUpDown Grid.Row="7" Grid.Column="2" FormatString="{}{0:#0}" Minimum="1" Maximum="5" Increment="1" IsEnabled="False" Value="{Binding ApiLogprobs}"/>
+		<ToggleSwitch Grid.Row="7" Grid.Column="3" IsEnabled="False" IsChecked="{Binding ApiLogprobIsEnables}" />
+		<TextBlock Grid.Row="7" Grid.Column="4" Text="null" />-->
+
+		<TextBlock Grid.Row="8" Grid.Column="0" Text="presence_penalty" TextAlignment="Right"/>
+		<Slider Grid.Row="8" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="0.1" Minimum="-2" Maximum="2" Value="{Binding ApiPresencePenalty}" />
+		<local:CustomNumericUpDown Grid.Row="8" Grid.Column="2" FormatString="{}{0:#0.0}" Minimum="-2" Maximum="2" Increment="0.1" Value="{Binding ApiPresencePenalty}"/>
+		<ToggleSwitch Grid.Row="8" Grid.Column="3" IsChecked="{Binding ApiPresencePenaltyIsEnable}" />
+		<TextBlock Grid.Row="8" Grid.Column="4" Text="0.0" />
+
+		<TextBlock Grid.Row="9" Grid.Column="0" Text="frequency_penalty" TextAlignment="Right"/>
+		<Slider Grid.Row="9" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="0.1" Minimum="-2" Maximum="2" Value="{Binding ApiFrequencyPenalty}" />
+		<local:CustomNumericUpDown Grid.Row="9" Grid.Column="2" FormatString="{}{0:#0.0}" Minimum="-2" Maximum="2" Increment="0.1" Value="{Binding ApiFrequencyPenalty}"/>
+		<ToggleSwitch Grid.Row="9" Grid.Column="3" IsChecked="{Binding ApiFrequencyPenaltyIsEnable}" />
+		<TextBlock Grid.Row="9" Grid.Column="4" Text="0.0" />
+
+		<!--	<TextBlock Grid.Row="10" Grid.Column="0" Text="best_of" IsEnabled="False" TextAlignment="Right"/>
+		<Slider Grid.Row="10" Grid.Column="1" IsEnabled="False" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Maximum="32" Value="{Binding ApiBestOf}" />
+		<local:CustomNumericUpDown Grid.Row="10" Grid.Column="2" FormatString="{}{0:#0}" Minimum="1" Maximum="32" Increment="1" IsEnabled="False" Value="{Binding ApiBestOf}" />
+		<ToggleSwitch Grid.Row="10" Grid.Column="3" IsEnabled="False" IsChecked="{Binding ApiBestOfIsEnable}" />
+		<TextBlock Grid.Row="10" Grid.Column="4" Text="1" />-->
+
+		<TextBlock Grid.Row="11" Grid.Column="0" Text="conversation history &#xA;limit" TextAlignment="Right"/>
+		<Slider Grid.Row="11" Grid.Column="1" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="1" Maximum="4096" Value="{Binding MaxContentLength}" />
+		<local:CustomNumericUpDown Grid.Row="11" Grid.Column="2" FormatString="{}{0:#0}" Minimum="1" Maximum="4096" Increment="1" Value="{Binding MaxContentLength}"/>
+		<ToggleSwitch Grid.Row="11" Grid.Column="3" IsChecked="{Binding MaxContentLengthIsEnable}" />
+		<TextBlock Grid.Row="11" Grid.Column="4" Text="3072" />
+
+		<TextBlock Grid.Row="12" Grid.Column="0" Text=" "/>
+
+		<TextBlock Grid.Row="13" Grid.Column="0" Text="stop" TextAlignment="Right"/>
+		<TextBox Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="False" Watermark="ex Cat,Dog,Apple" Classes.clearButton="True" Text="{Binding ApiStop}"/>
+		<ToggleSwitch Grid.Row="13" Grid.Column="3" IsChecked="{Binding ApiStopIsEnable}" />
+		<TextBlock Grid.Row="13" Grid.Column="4" Text="null" />
+
+		<TextBlock Grid.Row="14" Grid.Column="0" Text="logit_bias" TextAlignment="Right"/>
+		<TextBox Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="False" Watermark="ex {&quot;50256&quot;: -100}, {&quot;50257&quot;: 50}" Classes.clearButton="True" Text="{Binding ApiLogitBias}"/>
+		<ToggleSwitch Grid.Row="14" Grid.Column="3" IsChecked="{Binding ApiLogitBiasIsEnable}" />
+		<TextBlock Grid.Row="14" Grid.Column="4" Text="null" />
+
+		<TextBlock Grid.Row="15" Grid.Column="0" Text=" "/>
+
+		<TextBlock Grid.Row="16" Grid.Column="0" Text="url" TextAlignment="Right"/>
+		<TextBox Grid.Row="16" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="False" Classes.clearButton="True" Text="{Binding ApiUrl}" />
+
+		<TextBlock Grid.Row="17" Grid.Column="0" Text="API key" TextAlignment="Right" />
+		<TextBox Grid.Row="17" Grid.Column="1" Grid.ColumnSpan="2" AcceptsReturn="False" PasswordChar="*" RevealPassword="False" Classes="revealPasswordButton" Margin="10,18,0,15" Text="{Binding ApiKey}" />
+
+		<TextBlock Grid.Row="18" Grid.Column="0" Grid.ColumnSpan="5" FontSize="12" Text="{DynamicResource My.Strings.ConversationHitoryInfo}" HorizontalAlignment="Center" />
+
+		<Button Grid.Row="19" Grid.Column="0" Grid.ColumnSpan="5" Content="Reset" HorizontalAlignment="Center" Margin="0,20,0,15" Width="100" Height="30" Command="{Binding ResetApiSettingsCommand}"/>
+
+		<Button Grid.Row="20" Grid.Column="0" Grid.ColumnSpan="5" Content="Close" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding ClosingApiSettingsCommand}"/>
+	</Grid>
 </UserControl>

@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace TerraMours.Chat.Ava.Views.Class {
+namespace TerraMours.Chat.Ava {
     public class GridLengthConverter : JsonConverter<GridLength> {
         public override GridLength Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) {
             if (reader.TokenType != JsonTokenType.StartObject) {

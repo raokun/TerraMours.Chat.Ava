@@ -1,11 +1,17 @@
 ﻿using ReactiveUI;
 using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public class MainWindowViewModel : ViewModelBase {
         public MainWindowViewModel() {
             ApiSettingIsOpened = false;
+            ClosingApiSettingsCommand = ReactiveCommand.Create(ClosingApiSettings);
+            ResetApiSettingsCommand = ReactiveCommand.Create(ResetApiSettings);
         }
+        public ICommand ClosingApiSettingsCommand { get; }
+        public ICommand ResetApiSettingsCommand { get; }
+
         private void ClosingApiSettings() {
             ApiSettingIsOpened = false;
             VMLocator.ChatViewModel.ChatViewIsVisible = true;
