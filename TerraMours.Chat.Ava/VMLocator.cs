@@ -17,5 +17,20 @@ namespace TerraMours.Chat.Ava {
             get=>_loadViewModel ??= new LoadViewModel();
             set => _loadViewModel = value;
         }
+        private static MainViewModel _mainViewModel;
+        public static MainViewModel MainViewModel {
+            get=> _mainViewModel ??= new MainViewModel();
+            set => _mainViewModel = value;
+        }
+        private static ChatViewModel _chatViewModel;
+        public static ChatViewModel ChatViewModel {
+            get=>_chatViewModel ??= new ChatViewModel();
+            set => _chatViewModel = value;
+        }
+        private static DataGridViewModel _dataGridViewModel;
+        public static DataGridViewModel DataGridViewModel {
+            get=> (_dataGridViewModel ??= new DataGridViewModel());
+            set => _dataGridViewModel = value;
+        }
     }
 }

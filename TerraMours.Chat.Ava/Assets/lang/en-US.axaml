@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <!-- Add Resources Here -->
+	<system:String x:Key="My.Strings.ConversationHitoryInfo">
+		"conversation history limit" is a client option, not an API parameter.
+		When the set value (tokens) is exceeded,
+		the conversation history will be automatically summarized.
+	</system:String>
+</ResourceDictionary>

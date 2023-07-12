@@ -1,0 +1,414 @@
+﻿<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:AvalonEdit="clr-namespace:AvaloniaEdit;assembly=AvaloniaEdit"
+    xmlns:dialogHost="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!--  Add Controls for Previewer Here  -->
+        </Border>
+    </Design.PreviewWith>
+
+    <!--  Add Styles Here  -->
+    <Styles>
+        <Style Selector="SplitView Panel#PART_PaneRoot">
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+        </Style>
+        <Style Selector="TextBlock">
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+        </Style>
+        <Style Selector="TextBlock#Title">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="Margin" Value="0,5,15,5" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+        <Style Selector="TextBlock#PART_Watermark">
+            <Setter Property="Opacity" Value="0.4" />
+        </Style>
+        <Style Selector="#PART_CaptionButtons Button:pointerover">
+            <Setter Property="Background" Value="rgb(106, 108, 125)" />
+        </Style>
+        <Style Selector="Grid Button">
+            <Setter Property="BorderBrush" Value="rgb(94, 95, 109)" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Padding" Value="10,0,10,2" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.2" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Grid Button:pointerover">
+            <Setter Property="Background" Value="rgb(84, 85, 99)" />
+            <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+        </Style>
+        <Style Selector="Grid Button:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="rgb(84, 85, 99)" />
+            <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+        </Style>
+
+        <Style Selector="Grid Button.Post:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="rgb(100, 90, 165)" />
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets Button">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Margin" Value="0,2,2,2" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.00" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets Button.KeyDown">
+            <Setter Property="Background" Value="rgb(77, 75, 108)" />
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets Button:pressed">
+            <Setter Property="Background" Value="rgb(110, 100, 175)" />
+        </Style>
+
+        <Style Selector="Grid ToggleButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="Grid ToggleButton Image">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Opacity" Value="0.6" />
+            <Setter Property="RenderTransform" Value="rotate(0)" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <TransformOperationsTransition
+                        Easing="ExponentialEaseOut"
+                        Property="RenderTransform"
+                        Duration="0:0:1.5" />
+                </Transitions>
+            </Setter>
+        </Style>
+        <Style Selector="Grid ToggleButton:checked Image">
+            <Setter Property="RenderTransform" Value="rotate(180deg)" />
+        </Style>
+        <Style Selector="Grid ToggleButton:pointerover Image">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="Grid Button Image">
+            <Setter Property="Height" Value="18" />
+            <Setter Property="Width" Value="18" />
+        </Style>
+
+        <Style Selector="Grid Button.ImageButton">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="4,0" />
+            <Setter Property="Height" Value="32" />
+            <Setter Property="CornerRadius" Value="6" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+        <Style Selector="Grid Button.ImageButton Image">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Width" Value="24" />
+        </Style>
+        <Style Selector="Grid Button.ImageButton Image.ButtonIcon">
+            <Setter Property="Opacity" Value="0.7" />
+        </Style>
+        <Style Selector="Grid Button.ImageButton:pointerover Image.ButtonIcon">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+
+        <Style Selector="Grid Button.ImageButton:disabled Image.ButtonIcon">
+            <Setter Property="Opacity" Value="0.2" />
+        </Style>
+
+        <Style Selector="Grid Button.ImageButton:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ButtonBackground}" />
+        </Style>
+
+        <Style Selector="AvalonEdit|TextEditor">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+        <Style Selector="ListBox,ListBoxItem,ListBoxItem:selected">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="MinHeight" Value="36" />
+        </Style>
+        <Style Selector="ListBox TextBlock,ListBoxItem TextBlock,ListBoxItem:selected TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+        <Style Selector="ListBoxItem /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Height" Value="28" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox,Grid TextBox#PreviewTextBox">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="SelectionBrush" Value="rgb(110, 100, 175)" />
+            <Setter Property="SelectionForegroundBrush" Value="White" />
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="LineHeight" Value="20" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox:focus">
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox:pointerover">
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style Selector="Grid#EditorGrid TextBox.SystemMessageBackground">
+            <Setter Property="Background" Value="rgb(60, 50, 125)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox.SystemMessageBackground:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(60, 50, 125)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Grid#EditorGrid TextBox.SystemMessageBackground:focus /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(60, 50, 125)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+
+        <Style Selector="Grid TextBox#PreviewTextBox">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+        </Style>
+        <Style Selector="Grid TextBox#PreviewTextBox:focus /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="Grid TextBox#PreviewTextBox:pointerover /template/ Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style Selector="TextBox.NormalInput">
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+            <Setter Property="SelectionBrush" Value="rgb(110, 100, 175)" />
+            <Setter Property="BorderBrush" Value="rgb(84, 85, 99)" />
+            <Setter Property="SelectionForegroundBrush" Value="White" />
+            <Setter Property="Background" Value="rgb(58, 59, 71)" />
+            <Setter Property="Margin" Value="2,0" />
+            <Setter Property="Padding" Value="7" />
+            <Setter Property="Height" Value="23" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+        <Style Selector="TextBox.NormalInput:focus">
+            <Setter Property="Foreground" Value="rgb(255, 255, 255)" />
+        </Style>
+        <Style Selector="TextBox.NormalInput:focus Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets TextBox">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="rgb(190, 190, 190)" />
+            <Setter Property="SelectionBrush" Value="rgb(110, 100, 175)" />
+            <Setter Property="BorderBrush" Value="rgb(84, 85, 99)" />
+            <Setter Property="SelectionForegroundBrush" Value="White" />
+            <Setter Property="Background" Value="rgb(58, 59, 71)" />
+            <Setter Property="Margin" Value="2,0,8,0" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="Height" Value="23" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+            <Setter Property="Transitions">
+                <Transitions>
+                    <BrushTransition Property="Background" Duration="0:0:0.05" />
+                </Transitions>
+            </Setter>
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets TextBox:focus Border#PART_BorderElement">
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+        </Style>
+        <Style Selector="Grid#PhrasePresets TextBox Border#PART_BorderElement">
+            <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+        </Style>
+
+        <Style Selector="Grid#PhrasePresets TextBox.KeyDown">
+            <Setter Property="Background" Value="rgb(77, 75, 108)" />
+        </Style>
+
+
+
+        <Style Selector="Grid#DialogSpace">
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+        </Style>
+        <Style Selector="Grid#DialogSpace TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+
+        <Style Selector="ToggleSwitch TextBlock">
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="Margin" Value="0,0,10,5" />
+        </Style>
+        <Style Selector="ToggleSwitch">
+            <Setter Property="Margin" Value="8,0,0,5" />
+            <Setter Property="MinWidth" Value="5" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/Lato-Regular.ttf#Lato" />
+        </Style>
+        <Style Selector="ToggleSwitch TextBlock">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="ToggleSwitch /template/ ContentPresenter#PART_OffContentPresenter">
+            <Setter Property="Margin" Value="-7,10,0,4" />
+        </Style>
+        <Style Selector="ToggleSwitch /template/ ContentPresenter#PART_OnContentPresenter">
+            <Setter Property="Margin" Value="-7,10,0,4" />
+        </Style>
+        <Style Selector="ComboBox">
+            <Setter Property="Background" Value="rgb(52, 53, 65)" />
+            <Setter Property="BorderBrush" Value="rgb(94, 95, 109)" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/Lato-Regular.ttf#Lato" />
+            <Setter Property="CornerRadius" Value="6" />
+        </Style>
+        <Style Selector="ComboBoxItem">
+            <Setter Property="Foreground" Value="rgb(220, 220, 220)" />
+        </Style>
+        <Style Selector="ComboBox:pointerover /template/ Border#Background">
+            <Setter Property="Background" Value="rgb(84, 85, 99)" />
+            <Setter Property="BorderBrush" Value="rgb(106, 108, 125)" />
+        </Style>
+
+        <Style Selector="DataGrid">
+            <Setter Property="Foreground" Value="rgb(220,220,220)" />
+            <Setter Property="Background" Value="rgb(42, 43, 55)" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Hidden" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Hidden" />
+        </Style>
+
+        <Style Selector="DataGrid:pointerover">
+            <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+            <Setter Property="HorizontalScrollBarVisibility" Value="Auto" />
+        </Style>
+
+        <Style Selector="DataGrid TextBlock">
+            <Setter Property="Margin" Value="0,14,10,14" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="avares://TerraMours.Chat.Ava/Assets/migu-1m-regular.ttf#Migu 1M" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings TextBlock">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings NumericUpDown">
+            <Setter Property="ClipValueToMinMax" Value="True" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="140" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings ToggleSwitch">
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="OnContent" Value="" />
+            <Setter Property="OffContent" Value="" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings Slider">
+            <Setter Property="Margin" Value="10,0,0,0" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings ComboBox">
+            <Setter Property="Margin" Value="10,0,0,0" />
+        </Style>
+
+        <Style Selector="Grid#ApiSettings TextBox">
+            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Height" Value="20" />
+        </Style>
+
+        <Style Selector="Window">
+            <Setter Property="Padding" Value="10,0,10,10" />
+            <Setter Property="MinWidth" Value="930" />
+            <Setter Property="MinHeight" Value="600" />
+            <!--<Setter Property="RenderOptions.BitmapInterpolationMode" Value="HighQuality" />-->
+            <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
+            <Setter Property="ExtendClientAreaChromeHints" Value="PreferSystemChrome" />
+        </Style>
+
+        <Style Selector="Button.AnimeStart Image#ButtonWriteImage,Button.AnimeStart Image#ButtonWriteImage2">
+            <Style.Animations>
+                <Animation Duration="0:0:1.5">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="0.0" />
+                        <Setter Property="Opacity" Value="0.7" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="Button.AnimeStart Image#ButtonAnime1, Button.AnimeStart Image#ButtonAnime1b">
+            <Style.Animations>
+                <Animation Duration="0:0:1.5">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0.0" />
+                        <Setter Property="Opacity" Value="1.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="66%">
+                        <Setter Property="RotateTransform.Angle" Value="720.0" />
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+        <Style Selector="Button.AnimeStart Image#ButtonAnime2, Button.AnimeStart Image#ButtonAnime2b">
+            <Style.Animations>
+                <Animation Duration="0:0:1.5">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="66%">
+                        <Setter Property="Opacity" Value="0.0" />
+                        <Setter Property="Opacity" Value="1.0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="Opacity" Value="1.0" />
+                        <Setter Property="Opacity" Value="0.0" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+
+    </Styles>
+</Styles>
