@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TerraMours.Chat.Ava.Models.Class {
+namespace TerraMours.Chat.Ava {
     /// <summary>
     /// 时间转换器
     /// </summary>

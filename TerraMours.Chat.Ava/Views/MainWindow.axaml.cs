@@ -14,6 +14,7 @@ using System.Linq;
 using Avalonia.Threading;
 using Avalonia;
 using TerraMours.Chat.Ava.Models;
+using ReactiveUI;
 
 namespace TerraMours.Chat.Ava.Views {
     public partial class MainWindow : Window {
@@ -24,18 +25,26 @@ namespace TerraMours.Chat.Ava.Views {
             this.Closing += (sender, e) => SaveWindowSizeAndPosition();
 
             this.Loaded += MainWindow_Loaded;
-            DataContext = MainWindowViewModel;
+            MainWindowViewModel = new MainWindowViewModel();
             VMLocator.MainWindowViewModel = MainWindowViewModel;
+            DataContext = MainWindowViewModel;
             var cultureInfo = CultureInfo.CurrentCulture;
             if (cultureInfo.Name == "zh-CN") {
                 Translate("zh-CN");
             }
-        }
 
+            this.KeyDown += MainWindow_KeyDown;
+
+        }
+        private void InitializeComponent() {
+            AvaloniaXamlLoader.Load(this);
+        }
         #region ¼üÅÌ¼àÌý
         private void MainWindow_KeyDown(object sender,KeyEventArgs e) {
             if(e.Key==Key.LeftAlt || e.Key == Key.RightAlt) {
                 //todo: Ìí¼ÓÂß¼­
+                VMLocator.MainWindowViewModel.ApiSettingIsOpened = true;
+                VMLocator.MainWindowViewModel.ApiMaxTokens += 1;
             }
         }
         #endregion

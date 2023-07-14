@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace TerraMours.Chat.Ava.ViewModels {
-    public class MainWindowViewModel : ViewModelBase {
+    public partial class MainWindowViewModel : ViewModelBase {
         public MainWindowViewModel() {
             ApiSettingIsOpened = false;
             ClosingApiSettingsCommand = ReactiveCommand.Create(ClosingApiSettings);
@@ -19,7 +19,12 @@ namespace TerraMours.Chat.Ava.ViewModels {
         private bool _apiSettingIsOpened;
         public bool ApiSettingIsOpened {
             get => _apiSettingIsOpened;
-            set => this.RaiseAndSetIfChanged(ref _apiSettingIsOpened, value);
+            set {
+                if (_apiSettingIsOpened != value) {
+                _apiSettingIsOpened = value;
+                    this.RaisePropertyChanged(nameof(ApiSettingIsOpened));
+                }
+            }
         }
 
         #region 系统设置
@@ -72,6 +77,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
         private AppSettings _appSettings => AppSettings.Instance;
 
         #region 参数
+
         public int ApiMaxTokens {
             get => _appSettings.ApiMaxTokens;
             set {

@@ -3,8 +3,225 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:ui="using:FluentAvalonia.UI.Controls"
+			 xmlns:uip="using:FluentAvalonia.UI.Controls.Primitives"
 			 xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+			 xmlns:local="using:TerraMours.Chat.Ava.Views"
 			 x:DataType="vm:MainViewModel"
              x:Class="TerraMours.Chat.Ava.Views.MainView">
-  Welcome to Avalonia raokun!
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="*"/>
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0"
+					Grid.Column="0"
+					Name="ProgramTitleBar"
+					Orientation="Horizontal"
+					Margin="0,7,0,5"
+					HorizontalAlignment="Left">
+			<Image Source="/Assets/logo.png"
+				   Height="17"
+				   Width="17"
+				   VerticalAlignment="Center"
+				   Margin="0,0,5,3"
+				   Name="WindowIcon"
+				   IsHitTestVisible="False"/>
+			<TextBlock Text="TerraMoursDeskTop"
+					   Name="Title"
+					   IsHitTestVisible="False"/>
+		</StackPanel>
+		<SplitView Grid.Row="1"
+				   Grid.Column="0"
+				   IsPaneOpen="{Binding	LogPainIsOpened}"
+				   DisplayMode="Inline"
+				   OpenPaneLength="350">
+			<SplitView.Pane>
+				<Grid Margin="0,0,10,0">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto"/>
+						<RowDefinition Height="50"/>
+						<RowDefinition Height="*"/>
+						<RowDefinition Height="Auto"/>
+					</Grid.RowDefinitions>
+					<!--会话列表-->
+					<ListBox Grid.Row="0"
+							 ItemsSource="{Binding	LogPanes}"
+							 SelectedItem="{Binding SelectedLogPain}">
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<WrapPanel/>
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+					</ListBox>
+					<!--会话查询-->
+					<Border Grid.Row="1"
+							BorderBrush="rgb(42,43,55)"
+							BorderThickness="1,1,1,0">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="*"/>
+								<ColumnDefinition Width="Auto"/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid Grid.Column="0">
+								<TextBlock Classes="NormalInput"
+										   Classes.clearButton="True"
+										   Padding="30,7,7,7"
+										   Margin="10,0,0,0"
+										   Text="{Binding SearchLogKeyword}"/>
+								<Image Source="/Assets/iconSearch.png"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Center"
+									   Height="18"
+									   Width="18"
+									   Margin="20,0"
+									   Opacity="0.7"/>
+							</Grid>
+							<Button Grid.Column="1"
+									Flyout="{StaticResource ChatLogMenuFlyout}"
+									Classes="ImageButton"
+									VerticalAlignment="Center"
+									Padding="4,0"
+									Margin="4,0,2,0">
+								<Image Classes="ButtonIcon"
+									   Source="/Assets/iconSave.png"
+									   VerticalAlignment="Center"/>
+							</Button>
+							<Button Grid.Column="2"
+									Command="{Binding DeleteChatLogCommand}"
+									Classes="ImageButton"
+									VerticalAlignment="Center"
+									Padding="4,0"
+									Margin="0,0,5,0">
+								<Image Classes="ButtonIcon"
+										Source="/Assets/iconDelete.png"
+										VerticalAlignment="Center" />
+							</Button>
+						</Grid>
+					</Border>
+					<!--会话列表-->
+					<Border Grid.Row="2"
+							Background="rgb(42, 43, 55)"
+							BorderBrush="rgb(42, 43, 55)"
+							BorderThickness="0,1,0,0">
+						<local:DataGridView />
+					</Border>
+					<Grid Grid.Row="3">
+						<Button ToolTip.Tip="System message"
+							HorizontalAlignment="Right"
+							VerticalAlignment="Center"
+							BorderThickness="0"
+							Width="28"
+							Height="28"
+							Margin="0,0,90,0"
+							Command="{Binding SystemMessageCommand}">
+							<Image Source="/Assets/iconSystem.png"
+									VerticalAlignment="Center" />
+						</Button>
+						<Button ToolTip.Tip="API settings"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Center"
+								BorderThickness="0"
+								Width="28"
+								Height="28"
+								Margin="0,0,60,0"
+								Command="{Binding OpenApiSettingsCommand}">
+							<Image Source="/Assets/iconSetting.png"
+									VerticalAlignment="Center" />
+						</Button>
+						<Button ToolTip.Tip="Database settings"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Center"
+								BorderThickness="0"
+								Width="28"
+								Height="28"
+								Margin="0,0,30,0"
+								Command="{Binding ShowDatabaseSettingsCommand}">
+							<Image Source="/Assets/iconDatabase.png"
+									VerticalAlignment="Center" />
+						</Button>
+						<Button ToolTip.Tip="Keyboard shortcuts"
+								HorizontalAlignment="Right"
+								VerticalAlignment="Center"
+								BorderThickness="0"
+								Width="28"
+								Height="28"
+								Command="{Binding HotKeyDisplayCommand}">
+							<Image Source="/Assets/iconKeyboard.png"
+									VerticalAlignment="Center" />
+						</Button>
+					</Grid>
+				</Grid>
+			</SplitView.Pane>
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="*"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<ListBox Grid.Row="0"
+							Name="LeftPaneList"
+							ItemsSource="{Binding LeftPanes}"
+							SelectedItem="{Binding SelectedLeftPane}">
+					<ListBox.ItemsPanel>
+						<ItemsPanelTemplate>
+							<WrapPanel />
+						</ItemsPanelTemplate>
+					</ListBox.ItemsPanel>
+				</ListBox>
+				<!--聊天列表-->
+				<Border Grid.Row="1"
+						Background="rgb(42, 43, 55)"
+						BorderBrush="rgb(42, 43, 55)"
+						BorderThickness="0,1,0,0">
+					<local:ChatView />
+				</Border>
+				<Border Grid.Row="2"
+					  BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+					VerticalAlignment="Stretch"
+					BorderThickness="1">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="Auto"/>
+						</Grid.ColumnDefinitions>
+						<TextBox Grid.Column="0" Name="SendText" AcceptsReturn="True" MaxHeight="65"  TextWrapping="Wrap"
+                             Watermark="提问内容"
+                             BorderBrush="Transparent" />
+						<StackPanel Grid.Column="1"
+									Spacing="5"
+									Orientation="Horizontal">
+							<Grid>
+								<Button Content="{Binding PostButtonText}"
+										Height="38"
+										Width="110"
+										Margin="0,0,10,0"
+										VerticalAlignment="Center"
+										HorizontalAlignment="Center"
+										Command="{Binding PostCommand}"
+										ToolTip.Tip="Post text (Ctrl + Enter)"
+										Classes="Post"
+										HotKey="Ctrl+Enter" />
+								<Image Source="/Assets/iconPost.png"
+										VerticalAlignment="Center"
+										HorizontalAlignment="Left"
+										IsHitTestVisible="False"
+										Height="16"
+										Width="16"
+										Margin="10,0,0,0" />
+							</Grid>
+						</StackPanel>
+					</Grid>
+				</Border>
+			</Grid>
+		</SplitView>			
+	</Grid>
+	<UserControl.Resources>
+
+		<MenuFlyout x:Key="ChatLogMenuFlyout" Placement="Bottom">
+			<MenuItem Header="Import from CSV" Command="{Binding ImportChatLogCommand}"/>
+			<MenuItem Header="Export to CSV" Command="{Binding ExportChatLogCommand}"/>
+		</MenuFlyout>
+	</UserControl.Resources>
 </UserControl>

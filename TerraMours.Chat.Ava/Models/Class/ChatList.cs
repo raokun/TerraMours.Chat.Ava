@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TerraMours.Chat.Ava.Models.Class {
+namespace TerraMours.Chat.Ava.Models {
     public class ChatList {
         public long Id { get; set; }
         public DateTime Date { get; set; }

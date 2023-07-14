@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using TerraMours.Chat.Ava.Models;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public class ChatViewModel :ViewModelBase{
         public ChatViewModel() {
             ChatViewIsVisible = true;
+            DeleteMessageCommand = ReactiveCommand.CreateFromTask(DeleteMessage);
         }
         #region 字段
         private bool _chatViewIsVisible;
@@ -81,10 +84,29 @@ namespace TerraMours.Chat.Ava.ViewModels {
             get => _chatViewFontSize;
             set => this.RaiseAndSetIfChanged(ref _chatViewFontSize, value);
         }
-        #endregion
-        public void OpenApiSettings() {
-            VMLocator.ChatViewModel.ChatViewIsVisible = false;
-            VMLocator.MainWindowViewModel.ApiSettingIsOpened = true;
+
+        #region 消息
+        private List<ChatMessage> _chatHistory;
+        public List<ChatMessage> ChatHistory { 
+            get => _chatHistory;
+            set => this.RaiseAndSetIfChanged(ref _chatHistory, value);
         }
+
+        #endregion
+        #endregion
+        #region 事件
+        public ICommand DeleteMessageCommand { get; }
+        #endregion
+        #region 方法
+        public void OpenApiSettings() {
+            //VMLocator.ChatViewModel.ChatViewIsVisible = false;
+            VMLocator.MainWindowViewModel.ApiSettingIsOpened = true;
+            var i = VMLocator.MainWindowViewModel.ApiMaxTokens;
+            VMLocator.MainWindowViewModel.ApiMaxTokens=100;
+        }
+        private async Task DeleteMessage() {
+            return;
+        }
+        #endregion
     }
 }

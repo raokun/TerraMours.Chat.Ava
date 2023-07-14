@@ -37,9 +37,12 @@ namespace TerraMours.Chat.Ava.ViewModels {
         public ObservableCollection<ChatList> ChatList {
             get => _chatList;
             set {
-                this.RaiseAndSetIfChanged(ref _chatList, value);
-                DataGridCollection = new DataGridCollectionView(ChatList);
-                DataGridCollection.GroupDescriptions.Add(new DataGridPathGroupDescription("Category"));
+                if (_chatList != value) {
+                    _chatList = value;
+                    DataGridCollection = new DataGridCollectionView(ChatList);
+                    DataGridCollection.GroupDescriptions.Add(new DataGridPathGroupDescription("Category"));
+                    this.RaisePropertyChanged(nameof(ChatList));
+                }
             }
         }
 
