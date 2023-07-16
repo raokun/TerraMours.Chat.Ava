@@ -180,13 +180,13 @@
 				<Border Grid.Row="2"
 					  BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
 					VerticalAlignment="Stretch"
-					BorderThickness="1">
+					>
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="*"/>
 							<ColumnDefinition Width="Auto"/>
 						</Grid.ColumnDefinitions>
-						<TextBox Grid.Column="0" Name="SendText" AcceptsReturn="True" MaxHeight="65"  TextWrapping="Wrap"
+						<TextBox Grid.Column="0" Name="SendText" AcceptsReturn="True" MaxHeight="200"  TextWrapping="Wrap" Text="{Binding PostMessage}"
                              Watermark="提问内容"
                              BorderBrush="Transparent" />
 						<StackPanel Grid.Column="1"
@@ -194,9 +194,9 @@
 									Orientation="Horizontal">
 							<Grid>
 								<Button Content="{Binding PostButtonText}"
-										Height="38"
+										MaxHeight="38"
 										Width="110"
-										Margin="0,0,10,0"
+										Margin="0,0,0,0"
 										VerticalAlignment="Center"
 										HorizontalAlignment="Center"
 										Command="{Binding PostCommand}"

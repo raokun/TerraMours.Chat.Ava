@@ -39,8 +39,9 @@
 	<PackageReference Include="System.Data.SQLite" Version="1.0.117" />
 	<PackageReference Include="CsvHelper" Version="30.0.1" />
 	<PackageReference Include="Markdown.Avalonia" Version="11.0.0-d1" />
-	  <PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.0-d1" />
-	  <PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.0-d1" />
+	<PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.0-d1" />
+	<PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.0-d1" />
+	<PackageReference Include="Betalgo.OpenAI" Version="7.1.2-beta" />
   </ItemGroup>
 
 

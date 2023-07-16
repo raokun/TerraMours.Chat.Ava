@@ -23,7 +23,7 @@ namespace TerraMours.Chat.Ava.Models {
     /// 数据库
     /// </summary>
     public class DatabaseProcess {
-        public static SQLiteConnection memoryConnection; // メモリ上のSQLコネクション
+        public static SQLiteConnection memoryConnection; // sql连接
 
         // SQL db初期化--------------------------------------------------------------
         public void CreateDatabase() {

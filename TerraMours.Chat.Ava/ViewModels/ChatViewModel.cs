@@ -1,11 +1,17 @@
-﻿using ReactiveUI;
+﻿using DynamicData;
+using FluentAvalonia.UI.Controls;
+using OpenAI.Managers;
+using OpenAI.ObjectModels.RequestModels;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TerraMours.Chat.Ava.Models;
+using Tmds.DBus.Protocol;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public class ChatViewModel :ViewModelBase{
@@ -86,8 +92,8 @@ namespace TerraMours.Chat.Ava.ViewModels {
         }
 
         #region 消息
-        private List<ChatMessage> _chatHistory;
-        public List<ChatMessage> ChatHistory { 
+        private ObservableCollection<Models.ChatMessage> _chatHistory;
+        public ObservableCollection<Models.ChatMessage> ChatHistory { 
             get => _chatHistory;
             set => this.RaiseAndSetIfChanged(ref _chatHistory, value);
         }
@@ -107,6 +113,52 @@ namespace TerraMours.Chat.Ava.ViewModels {
         private async Task DeleteMessage() {
             return;
         }
+
+        #region OpenAI
+
+        public async Task PostChatAsync(string message,int conversationId) {
+            if (ChatHistory == null)
+                ChatHistory = new ObservableCollection<Models.ChatMessage>();
+            ChatHistory.Add(new Models.ChatMessage() { ChatRecordId=1,ConversationId= conversationId ,Message=message,Role="User",CreateDate=DateTime.Now});
+            //根据配置中的CONTEXT_COUNT 查询上下文
+            var messages = new List<OpenAI.ObjectModels.RequestModels.ChatMessage>();
+            messages.Add(OpenAI.ObjectModels.RequestModels.ChatMessage.FromUser(message));
+            var openAiOpetions = new OpenAI.OpenAiOptions()
+            {
+                ApiKey = AppSettings.Instance.ApiKey,
+                BaseDomain = AppSettings.Instance.ApiUrl
+            };
+            var openAiService = new OpenAIService(openAiOpetions);
+            //调用SDK
+            var response =await openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
+            {
+                Messages = messages,
+                Model = AppSettings.Instance.ApiModel,
+                MaxTokens = AppSettings.Instance.ApiMaxTokens,
+            });
+            if (response == null)
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = "接口调用失败",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+            }
+            if (!response.Successful)
+            {
+                var dialog = new ContentDialog()
+                {
+                    Title = $"接口调用失败，报错内容: {response.Error.Message}",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+            }
+            ChatHistory.Add(new Models.ChatMessage() { ChatRecordId = 2, ConversationId = conversationId, Message = response.Choices.FirstOrDefault().Message.Content, Role = response.Choices.FirstOrDefault().Message.Role, CreateDate = DateTime.Now });
+            VMLocator.ChatViewModel.ChatHistory=ChatHistory;
+        }
+
+        #endregion
         #endregion
     }
 }

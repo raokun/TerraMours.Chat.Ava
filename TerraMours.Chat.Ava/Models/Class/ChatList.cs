@@ -10,5 +10,10 @@ namespace TerraMours.Chat.Ava.Models {
         public DateTime Date { get; set; }
         public string? Title { get; set; }
         public string? Category { get; set; }
+
+        public static implicit operator List<object>(ChatList? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

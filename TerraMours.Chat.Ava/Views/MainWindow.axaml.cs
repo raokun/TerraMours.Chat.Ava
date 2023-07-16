@@ -40,11 +40,11 @@ namespace TerraMours.Chat.Ava.Views {
             AvaloniaXamlLoader.Load(this);
         }
         #region ¼üÅÌ¼àÌý
-        private void MainWindow_KeyDown(object sender,KeyEventArgs e) {
+        private async void MainWindow_KeyDown(object sender,KeyEventArgs e) {
             if(e.Key==Key.LeftAlt || e.Key == Key.RightAlt) {
                 //todo: Ìí¼ÓÂß¼­
-                VMLocator.MainWindowViewModel.ApiSettingIsOpened = true;
-                VMLocator.MainWindowViewModel.ApiMaxTokens += 1;
+                await VMLocator.MainViewModel.ChatRecordList();
+                
             }
         }
         #endregion

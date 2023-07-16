@@ -7,7 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TerraMours.Chat.Ava.Models {
+namespace TerraMours.Chat.Ava.Models.Class
+{
     /// <summary>
     /// 聊天消息框背景
     /// </summary>
@@ -16,11 +17,11 @@ namespace TerraMours.Chat.Ava.Models {
             if (value is string Role)
                 switch (Role) {
                     case "User":
-                        return new SolidColorBrush(Color.Parse("#F6F8FA"));
+                        return new SolidColorBrush(Color.Parse("#b6a5a2"));
                         break;
                     case "Assient":
                     default:
-                        return new SolidColorBrush(Color.Parse("#89D961"));
+                        return new SolidColorBrush(Color.Parse("#444654"));
                         break;
                 }
             return value;

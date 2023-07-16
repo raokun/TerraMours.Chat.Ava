@@ -5,20 +5,21 @@
 			 xmlns:sty="using:FluentAvalonia.Styling"
 			 xmlns:ui="using:FluentAvalonia.UI.Controls"
 			 xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
+			 xmlns:valueConverter="clr-namespace:TerraMours.Chat.Ava.Models.Class"
              RequestedThemeVariant="Default">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
         <local:ViewLocator/>
     </Application.DataTemplates>
-	
+
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceInclude Source="/Assets/lang/zh-CN.axaml" />
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
-
+		<valueConverter:ChatBackgroundConverter x:Key="ChatBackgroundConverter" />
 	</Application.Resources>
 	
     <Application.Styles>
