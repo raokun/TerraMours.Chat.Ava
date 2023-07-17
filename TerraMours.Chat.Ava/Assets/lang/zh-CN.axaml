@@ -1,0 +1,10 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=System.Runtime">
+    <!-- Add Resources Here -->
+	<system:String x:Key="My.Strings.ConversationHitoryInfo">
+		“对话历史限制”是一个客户端选项，而不是API参数。
+		当超过设定值（令牌）时，
+		会话历史记录将被自动总结。
+	</system:String>
+</ResourceDictionary>

@@ -9,10 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+	<AvaloniaResource Include="Assets\Lato-Regular.ttf" />
+	<AvaloniaResource Include="Assets\migu-1m-regular.ttf" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\lang\en-US.axaml" />
+    <AvaloniaResource Remove="Assets\lang\zh-CN.axaml" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<TrimmerRootDescriptor Include="Roots.xml" />
+	</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
@@ -21,6 +30,31 @@
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0-rc1.1" />
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc1.1" />
+	  <PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.0-rc1.1" />
     <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc1.1" />
+	<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.0-rc1.1" />
+	<PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.0-rc1.1" />
+	<PackageReference Include="DialogHost.Avalonia" Version="0.7.4" />
+	<PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
+	<PackageReference Include="System.Data.SQLite" Version="1.0.117" />
+	<PackageReference Include="CsvHelper" Version="30.0.1" />
+	<PackageReference Include="Markdown.Avalonia" Version="11.0.0-d1" />
+	<PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.0-d1" />
+	<PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.0-d1" />
+	<PackageReference Include="Betalgo.OpenAI" Version="7.1.2-beta" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\lang\en-US.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <AvaloniaXaml Update="Assets\lang\zh-CN.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
   </ItemGroup>
 </Project>
