@@ -81,8 +81,8 @@ namespace TerraMours.Chat.Ava.ViewModels {
                     _chatViewModel.LastConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[5]);
                 }
 
-                if (VMLocator.MainViewModel.SelectedLeftPane != "API Chat") {
-                    VMLocator.MainViewModel.SelectedLeftPane = "API Chat";
+                if (VMLocator.MainViewModel.SelectedLeftPane != "AI Chat") {
+                    VMLocator.MainViewModel.SelectedLeftPane = "AI Chat";
                 }
             }
         }

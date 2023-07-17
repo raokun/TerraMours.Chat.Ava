@@ -31,50 +31,50 @@ namespace TerraMours.Chat.Ava.Models {
             string sql = "CREATE TABLE phrase (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT NOT NULL DEFAULT '', phrase TEXT NOT NULL DEFAULT '');";
 
             using var command = new SQLiteCommand(sql, connection);
-            // phraseテーブル作成
+            // phrase创建表格
             connection.Open();
             command.ExecuteNonQuery();
 
-            // phraseインデックス作成
+            // phrase索引
             sql = "CREATE INDEX idx_text ON phrase (phrase);";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // chatlogテーブル作成
+            // chatlog创建表格
             sql = "CREATE TABLE chatlog (id INTEGER PRIMARY KEY AUTOINCREMENT, date DATE, title TEXT NOT NULL DEFAULT '', json TEXT NOT NULL DEFAULT '', text TEXT NOT NULL DEFAULT '', category TEXT NOT NULL DEFAULT '', lastprompt TEXT NOT NULL DEFAULT '', jsonprev TEXT NOT NULL DEFAULT '');";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // chatlogインデックス作成
+            // chatlog索引
             sql = "CREATE INDEX idx_chat_text ON chatlog (text);";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // editorlogテーブル作成
+            // editorlog创建表格
             sql = "CREATE TABLE editorlog (id INTEGER PRIMARY KEY AUTOINCREMENT, date DATE, text TEXT NOT NULL DEFAULT '');";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // editorlogインデックス作成
+            // editorlog索引
             sql = "CREATE INDEX idx_editor_text ON editorlog (text);";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // templateテーブル作成
+            // template创建表格
             sql = "CREATE TABLE template (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL DEFAULT '', text TEXT NOT NULL DEFAULT '');";
             command.CommandText = sql;
             command.ExecuteNonQuery();
 
-            // templateインデックス作成
+            // template索引
             sql = "CREATE INDEX idx_template_text ON editorlog (text);";
             command.CommandText = sql;
             command.ExecuteNonQuery();
         }
 
-        // データベースのチャットログをバージョンアップ--------------------------------------------------------------
+        // 升级数据库聊天日志--------------------------------------------------------------
         public async Task UpdateChatLogDatabaseAsync() {
             try {
-                // SQLiteデータベースに接続
+                // SQLite连接到数据库
                 using SQLiteConnection connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
                 await connection.OpenAsync();
 
@@ -150,21 +150,21 @@ namespace TerraMours.Chat.Ava.Models {
                 await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 throw;
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
         }
 
 
-        // SQL dbファイルをメモリにロード--------------------------------------------------------------
+        // 将SQL db文件加载到内存中--------------------------------------------------------------
         public async Task DbLoadToMemoryAsync() {
             var fileConnection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
             fileConnection.Open();
-            // メモリ上のDBファイルを作成
+            // 在内存上创建数据库文件
             memoryConnection = new SQLiteConnection("Data Source=:memory:");
             memoryConnection.Open();
             try {
-                // SQL dbをメモリにコピー
+                // 将SQL db复制到内存
                 fileConnection.BackupDatabase(memoryConnection, "main", "main", -1, null, 0);
             }
             catch (Exception ex) {
@@ -177,7 +177,7 @@ namespace TerraMours.Chat.Ava.Models {
             fileConnection.Close();
         }
 
-        // 定型句プリセットSave--------------------------------------------------------------
+        // Phrase Save--------------------------------------------------------------
         public async Task SavePhrasesAsync(string name, string phrasesText) {
             using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
             await connection.OpenAsync();
@@ -202,7 +202,7 @@ namespace TerraMours.Chat.Ava.Models {
             await DbLoadToMemoryAsync();
         }
 
-        // 定型句プリセット一覧Load--------------------------------------------------------------
+        // Phrase Load--------------------------------------------------------------
         public async Task<List<string>> GetPhrasesAsync() {
             List<string> phrases = new List<string>();
             string sql = "SELECT name FROM phrase ORDER BY name COLLATE NOCASE";
@@ -216,7 +216,7 @@ namespace TerraMours.Chat.Ava.Models {
             return phrases;
         }
 
-        // 定型句プリセット実体Load--------------------------------------------------------------
+        // Phrase Load--------------------------------------------------------------
         public async Task<List<string>> GetPhrasePresetsAsync(string selectedPhraseItem) {
             List<string> phrases = new List<string>();
             string sql = "SELECT phrase FROM phrase WHERE name = @selectedPhraseItem";
@@ -235,7 +235,7 @@ namespace TerraMours.Chat.Ava.Models {
             return phrases;
         }
 
-        // 定型句プリセットRename--------------------------------------------------------------
+        // Phrase Rename--------------------------------------------------------------
         public async Task UpdatePhrasePresetNameAsync(string oldName, string newName) {
             using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
             await connection.OpenAsync();
@@ -263,7 +263,7 @@ namespace TerraMours.Chat.Ava.Models {
             await DbLoadToMemoryAsync();
         }
 
-        // 定型句プリセットUpdate--------------------------------------------------------------
+        // Phrase Update--------------------------------------------------------------
         public async Task UpdatePhrasePresetAsync(string name, string phrasesText) {
             using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
             await connection.OpenAsync();
@@ -291,7 +291,7 @@ namespace TerraMours.Chat.Ava.Models {
             await DbLoadToMemoryAsync();
         }
 
-        // 定型句プリセットDelete--------------------------------------------------------------
+        // Phrase Delete--------------------------------------------------------------
         public async Task DeletePhrasePresetAsync(string selectedPhraseItem) {
             try {
                 using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
@@ -318,7 +318,7 @@ namespace TerraMours.Chat.Ava.Models {
             await DbLoadToMemoryAsync();
         }
 
-        // 定型句プリセットImport--------------------------------------------------------------
+        // Phrase Import--------------------------------------------------------------
         public async Task<ObservableCollection<string>> ImportPhrasesFromTxtAsync(string selectedFilePath) {
             ObservableCollection<string> phrases = new ObservableCollection<string>();
 
@@ -348,7 +348,7 @@ namespace TerraMours.Chat.Ava.Models {
             return phrases;
         }
 
-        // CSVインポート--------------------------------------------------------------
+        // CSV导入--------------------------------------------------------------
         public async Task<string> ImportCsvToTableAsync(string fileName, string tableName = "chatlog") {
             string msg;
             int processedCount = 0;
@@ -364,32 +364,32 @@ namespace TerraMours.Chat.Ava.Models {
             }
 
             try {
-                // CSVファイルからデータを読み込む
+                // CSV从文件导入数据
                 using var reader = new StreamReader(fileName, System.Text.Encoding.UTF8);
                 var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
                     HasHeaderRecord = true,
                     Delimiter = ","
                 };
                 using var csvReader = new CsvReader(reader, config);
-                csvReader.Read(); // ヘッダー行をスキップ
+                csvReader.Read(); // 跳过标题行
 
                 using var con = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
                 await con.OpenAsync();
                 using (var transaction = con.BeginTransaction()) {
                     try {
-                        while (await csvReader.ReadAsync()) // データ行を読み込む
+                        while (await csvReader.ReadAsync()) // 导入数据行
                         {
 
-                            // データを取得
+                            // 数据取得
                             var rowData = new List<string>();
-                            for (int i = 1, loopTo = columnEnd; i <= loopTo; i++) // 2列目から8列目まで
+                            for (int i = 1, loopTo = columnEnd; i <= loopTo; i++) // 从第二排到第八排
                                 rowData.Add(csvReader.GetField(i));
-                            // INSERT文を作成
+                            // 创建插入语句
                             string values = string.Join(", ", Enumerable.Range(0, rowData.Count).Select(i => $"@value{i}"));
 
                             string insertQuery = $"INSERT INTO {tableName} ({columnNames}) VALUES ({values});";
 
-                            // データをデータベースに挿入
+                            // 将数据插入数据库
                             using (var command = new SQLiteCommand(insertQuery, con)) {
                                 for (int i = 0, loopTo1 = rowData.Count - 1; i <= loopTo1; i++)
                                     command.Parameters.AddWithValue($"@value{i}", rowData[i]);
@@ -411,27 +411,27 @@ namespace TerraMours.Chat.Ava.Models {
             catch (Exception) {
                 throw;
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
 
             return msg;
         }
 
-        // CSVエクスポート--------------------------------------------------------------
+        // CSV导出--------------------------------------------------------------
         public async Task<string> ExportTableToCsvAsync(string fileName, string tableName = "chatlog") {
             string msg;
             try {
                 int processedCount = 0;
 
-                // SELECT クエリを実行し、テーブルのデータを取得
+                // SELECT 执行查询并检索表中的数据
                 var command = new SQLiteCommand($"SELECT * FROM {tableName};", memoryConnection);
                 using (SQLiteDataReader reader = (SQLiteDataReader)await command.ExecuteReaderAsync()) {
 
-                    // CSV ファイルに書き込むための StreamWriter を作成
+                    // CSV 创建StreamWriter以写入文件
                     using var writer = new StreamWriter(fileName, false, System.Text.Encoding.UTF8);
 
-                    // CsvWriter を作成し、設定を適用
+                    // CsvWriter 创建并应用设置
                     var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
                         HasHeaderRecord = true,
                         Delimiter = ","
@@ -441,12 +441,12 @@ namespace TerraMours.Chat.Ava.Models {
                     var commandRowCount = new SQLiteCommand($"SELECT COUNT(*) FROM {tableName};", memoryConnection);
                     int rowCount = Convert.ToInt32(commandRowCount.ExecuteScalar());
 
-                    // ヘッダー行を書き込む
+                    // 写入标题行
                     for (int i = 0, loopTo = reader.FieldCount - 1; i <= loopTo; i++)
                         csvWriter.WriteField(reader.GetName(i));
                     csvWriter.NextRecord();
 
-                    // データ行を書き込む
+                    // 写入数据行
 
                     while (await reader.ReadAsync()) {
                         for (int i = 0, loopTo1 = reader.FieldCount - 1; i <= loopTo1; i++) {
@@ -472,7 +472,7 @@ namespace TerraMours.Chat.Ava.Models {
             }
         }
 
-        // データベースからチャットログを検索--------------------------------------------------------------
+        // 从数据库搜索聊天日志--------------------------------------------------------------
         public async Task<ObservableCollection<ChatList>> SearchChatDatabaseAsync(string searchKey = "") {
             string query;
             if (string.IsNullOrEmpty(searchKey)) {
@@ -508,7 +508,7 @@ namespace TerraMours.Chat.Ava.Models {
             return chatList;
         }
 
-        // データベースから表示用チャットログを取得--------------------------------------------------------------
+        // 从数据库获取查看聊天日志--------------------------------------------------------------
         public async Task<List<string>> GetChatLogDatabaseAsync(long chatId) {
             string query = $"SELECT title, json, text, category, lastprompt, jsonprev FROM chatlog WHERE id = {chatId}";
             var result = new List<string>();
@@ -526,7 +526,7 @@ namespace TerraMours.Chat.Ava.Models {
             return result;
         }
 
-        // チャットログ削除--------------------------------------------------------------
+        // 删除聊天日志--------------------------------------------------------------
         public async Task DeleteChatLogDatabaseAsync(long chatId) {
             using (var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}")) {
                 connection.Open();
@@ -542,13 +542,13 @@ namespace TerraMours.Chat.Ava.Models {
                     throw;
                 }
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
             return;
         }
 
-        // タイトルの更新--------------------------------------------------------------
+        // 标题更新--------------------------------------------------------------
         public async Task UpdateTitleDatabaseAsync(long chatId, string title) {
             try {
                 using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
@@ -563,13 +563,13 @@ namespace TerraMours.Chat.Ava.Models {
             catch (Exception) {
                 throw;
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
             VMLocator.DataGridViewModel.ChatList = await SearchChatDatabaseAsync();
         }
 
-        // カテゴリの更新--------------------------------------------------------------
+        // 会话更新--------------------------------------------------------------
         public async Task UpdateCategoryDatabaseAsync(long chatId, string category) {
             try {
                 using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
@@ -585,13 +585,13 @@ namespace TerraMours.Chat.Ava.Models {
             catch (Exception) {
                 throw;
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
             VMLocator.DataGridViewModel.ChatList = await SearchChatDatabaseAsync();
         }
 
-        // Webチャットログのインポート--------------------------------------------------------------
+        // Web记录导入--------------------------------------------------------------
         public async Task<string> InsertWebChatLogDatabaseAsync(string webChatTitle, List<Dictionary<string, object>> webConversationHistory, string webLog, string chatService) {
             if (!string.IsNullOrEmpty(webLog)) {
                 int? matchingId = null;
@@ -635,10 +635,10 @@ namespace TerraMours.Chat.Ava.Models {
 
                 using var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
                 await connection.OpenAsync();
-                // トランザクションを開始する
+                // 启动事务
                 using var transaction = connection.BeginTransaction();
                 try {
-                    // logテーブルにデータをインサートする
+                    // 在log表中插入数据
                     using (var command = new SQLiteCommand(query, connection)) {
                         await Task.Run(() => command.Parameters.AddWithValue("@date", nowDate));
                         await Task.Run(() => command.Parameters.AddWithValue("@title", webChatTitle));
@@ -648,16 +648,16 @@ namespace TerraMours.Chat.Ava.Models {
                         await command.ExecuteNonQueryAsync();
                     }
 
-                    // トランザクションをコミットする
+                    // 提交事务
                     await Task.Run(() => transaction.Commit());
                 }
                 catch (Exception) {
-                    // エラーが発生した場合、トランザクションをロールバックする
+                    // 如果发生错误，则回滚事务
                     transaction.Rollback();
                     throw;
                 }
             }
-            // インメモリをいったん閉じてまた開く
+            // 关闭内存并重新打开
             await memoryConnection.CloseAsync();
             await DbLoadToMemoryAsync();
             VMLocator.DataGridViewModel.ChatList = await SearchChatDatabaseAsync();
@@ -757,213 +757,25 @@ namespace TerraMours.Chat.Ava.Models {
 
 
 
-        // データベースのEditorログをクリンナップ--------------------------------------------------------------
+        // 清除数据库编辑器日志--------------------------------------------------------------
         public async Task CleanUpEditorLogDatabaseAsync() {
-            // SQLiteデータベースに接続
+            // SQLite连接到数据库
             using SQLiteConnection connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}");
             await connection.OpenAsync();
 
-            // テーブルの行数を取得
+            // 获取表行数
             using (SQLiteCommand command = new SQLiteCommand("SELECT COUNT(*) FROM editorlog", connection)) {
                 var rowCount = (long)command.ExecuteScalar();
 
-                // 行数が500を超えている場合
+                
                 if (rowCount > 500) {
-                    // 日付が新しいもの500を残して削除
+                    // 删除日期为新的500
                     using (SQLiteCommand deleteCommand = new SQLiteCommand(@"DELETE FROM editorlog WHERE rowid NOT IN ( SELECT rowid FROM editorlog ORDER BY date DESC LIMIT 500 )", connection)) {
                         await deleteCommand.ExecuteNonQueryAsync();
                     }
                 }
             }
             await connection.CloseAsync();
-        }
-
-        // チャットログを更新--------------------------------------------------------------
-        public async Task InsertDatabaseChatAsync(DateTime postDate, string postText, DateTime resDate, string resText) {
-            var insertText = new List<string>();
-
-            if (!string.IsNullOrWhiteSpace(resText)) {
-                insertText = new List<string>
-                {
-                    $"[{postDate}] by You" + Environment.NewLine,
-                    postText + Environment.NewLine,
-                    "(!--editable--)" + Environment.NewLine,
-                    $"[{resDate}] by AI",
-                    resText
-                };
-            }
-            else {
-                // AIの返答が空の場合(システムメッセージのみ)
-                insertText = new List<string>
-                {
-                    $"[{postDate}] by You" + Environment.NewLine,
-                    postText +
-                    "---" + Environment.NewLine,
-                    "(!--editable--)" + Environment.NewLine,
-                };
-            }
-            string promptTextForSave = postText;
-
-           long lastRowId = VMLocator.ChatViewModel.LastId;
-            string titleText = VMLocator.ChatViewModel.ChatTitle;
-            if (string.IsNullOrWhiteSpace(titleText)) {
-                titleText = "";
-            }
-
-            string categoryText = VMLocator.ChatViewModel.ChatCategory;
-            if (string.IsNullOrWhiteSpace(categoryText)) {
-                categoryText = "";
-            }
-
-            string jsonConversationHistory = JsonSerializer.Serialize(VMLocator.ChatViewModel.ConversationHistory);
-            string jsonLastConversationHistory = JsonSerializer.Serialize(VMLocator.ChatViewModel.LastConversationHistory);
-            if (string.IsNullOrWhiteSpace(jsonLastConversationHistory)) {
-                jsonLastConversationHistory = "";
-            }
-
-            using (var connection = new SQLiteConnection($"Data Source={AppSettings.Instance.DbPath}")) {
-                connection.Open();
-                // トランザクションを開始する
-                using var transaction = connection.BeginTransaction();
-                try {
-                    if (lastRowId != -1) {
-                        // 指定されたIDのデータを取得する
-                        string currentText = "";
-                        using (var command = new SQLiteCommand("SELECT text FROM chatlog WHERE id=@id", connection)) {
-                            command.Parameters.AddWithValue("@id", lastRowId);
-                            using SQLiteDataReader reader = (SQLiteDataReader)await command.ExecuteReaderAsync();
-                            if (reader.Read()) {
-                                currentText = reader.GetString(0);
-                            }
-                        }
-
-                        currentText = Regex.Replace(currentText, @"\r\n|\r|\n", Environment.NewLine).Trim() + Environment.NewLine + Environment.NewLine; ;
-
-                        string searchText = $"(!--editable--){Environment.NewLine}";
-                        string byYouText = "] by You";
-
-                        if (VMLocator.ChatViewModel.ReEditIsOn) {
-                            // 既存のテキストに(!--editable--)を見つけたら、直前の[*] by Youから最後までを削除する
-                            if (currentText.Contains(searchText)) {
-                                int editableIndex = currentText.IndexOf(searchText);
-                                string textBeforeEditable = currentText.Substring(0, editableIndex);
-                                int lastByYouIndex = textBeforeEditable.LastIndexOf(byYouText);
-                                if (lastByYouIndex >= 0) {
-                                    int lastNewLineIndex = textBeforeEditable.LastIndexOf(Environment.NewLine, lastByYouIndex);
-                                    if (lastNewLineIndex >= 0) {
-                                        currentText = textBeforeEditable.Substring(0, lastNewLineIndex).Trim();
-                                    }
-                                    else {
-                                        // lastByYouIndex以前に改行が存在しない場合は初回メッセージと判断
-                                        currentText = "";
-                                    }
-                                }
-                                else {
-                                    // [*] by Youが存在しない場合の処理をここに書く
-                                    throw new Exception("Error : Incorrect log data. [*] by You ");
-                                }
-                            }
-                        }
-                        else {
-                            // 既存のテキストの(!--editable--)を削除する
-                            if (currentText.Contains(searchText)) {
-                                currentText = currentText.Replace(searchText, "");
-                            }
-                        }
-
-
-                        // 既存のテキストに新しいメッセージを追加する
-                        string newText = (currentText + Environment.NewLine + string.Join(Environment.NewLine, insertText)).Trim() + Environment.NewLine + Environment.NewLine;
-
-                        // 指定されたIDに対してデータを更新する
-                        using (var command = new SQLiteCommand("UPDATE chatlog SET date=@date, title=@title, json=@json, text=@text, category=@category, lastprompt=@lastprompt, jsonprev=@jsonprev WHERE id=@id", connection)) {
-                            await Task.Run(() => command.Parameters.AddWithValue("@date", resDate));
-                            await Task.Run(() => command.Parameters.AddWithValue("@title", titleText));
-                            await Task.Run(() => command.Parameters.AddWithValue("@json", jsonConversationHistory));
-                            await Task.Run(() => command.Parameters.AddWithValue("@text", newText));
-                            await Task.Run(() => command.Parameters.AddWithValue("@category", categoryText));
-                            await Task.Run(() => command.Parameters.AddWithValue("@lastprompt", promptTextForSave));
-                            await Task.Run(() => command.Parameters.AddWithValue("@jsonprev", jsonLastConversationHistory));
-                            await Task.Run(() => command.Parameters.AddWithValue("@id", lastRowId));
-                            await command.ExecuteNonQueryAsync();
-                        }
-                    }
-                    else {
-                        // logテーブルにデータをインサートする
-                        using (var command = new SQLiteCommand("INSERT INTO chatlog(date, title, json, text, category, lastprompt, jsonprev) VALUES (@date, @title, @json, @text, @category, @lastprompt, @jsonprev)", connection)) {
-                            await Task.Run(() => command.Parameters.AddWithValue("@date", resDate));
-                            await Task.Run(() => command.Parameters.AddWithValue("@title", titleText));
-                            await Task.Run(() => command.Parameters.AddWithValue("@json", jsonConversationHistory));
-                            await Task.Run(() => command.Parameters.AddWithValue("@text", string.Join(Environment.NewLine, insertText)));
-                            await Task.Run(() => command.Parameters.AddWithValue("@category", categoryText));
-                            await Task.Run(() => command.Parameters.AddWithValue("@lastprompt", promptTextForSave));
-                            await Task.Run(() => command.Parameters.AddWithValue("@jsonprev", jsonLastConversationHistory));
-                            await command.ExecuteNonQueryAsync();
-                        }
-
-                        // 更新中チャットのIDを取得
-                        string sqlLastRowId = "SELECT last_insert_rowid();";
-                        using (var command = new SQLiteCommand(sqlLastRowId, connection)) {
-                            long insertedId = Convert.ToInt64(command.ExecuteScalar());
-                            if (insertedId != VMLocator.ChatViewModel.LastId) {
-                                VMLocator.ChatViewModel.LastId = insertedId;
-                            }
-                        }
-                    }
-                    // トランザクションをコミットする
-                    await Task.Run(() => transaction.Commit());
-
-                    // 成功したら各種変数を更新する
-                    VMLocator.ChatViewModel.LastPrompt = promptTextForSave;
-                    VMLocator.ChatViewModel.ReEditIsOn = false;
-                }
-                catch (Exception) {
-                    // エラーが発生した場合、トランザクションをロールバックする
-                    transaction.Rollback();
-                    //var dialog = new ContentDialog() { Title = "Error : " + ex.Message, PrimaryButtonText = "OK" };
-                    //await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
-                    throw;
-                }
-            }
-            // インメモリをいったん閉じてまた開く
-            await memoryConnection.CloseAsync();
-            await DbLoadToMemoryAsync();
-        }
-
-        // データベースをチェック--------------------------------------------------------------
-        public async Task<bool> CheckTableExists(string selectedFilePath) {
-            // テーブル名のリスト
-            string[] tableNames = { "phrase", "chatlog", "editorlog", "template" };
-
-            try {
-                // データベースに接続
-                using (var connection = new SQLiteConnection($"Data Source={selectedFilePath};Version=3;")) {
-                    connection.Open();
-
-                    foreach (var tableName in tableNames) {
-                        // テーブルが存在するかどうかをチェック
-                        string commandText = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
-                        using (var command = new SQLiteCommand(commandText, connection)) {
-                            // テーブルが存在しない場合、ExecuteScalar() は null を返す
-                            var result = await command.ExecuteScalarAsync();
-                            if (result == null) {
-                                // テーブルが存在しないため、false を返す
-                                return false;
-                            }
-                        }
-                    }
-
-                    // インメモリをいったん閉じる
-                    await memoryConnection.CloseAsync();
-
-                    // すべてのテーブルが存在するため、true を返す
-                    return true;
-
-                }
-            }
-            catch (Exception) {
-                throw;
-            }
         }
     }
 }

@@ -43,8 +43,6 @@ namespace TerraMours.Chat.Ava.Views {
         private async void MainWindow_KeyDown(object sender,KeyEventArgs e) {
             if(e.Key==Key.LeftAlt || e.Key == Key.RightAlt) {
                 //todo: Ìí¼ÓÂß¼­
-                await VMLocator.MainViewModel.ChatRecordList();
-                
             }
         }
         #endregion

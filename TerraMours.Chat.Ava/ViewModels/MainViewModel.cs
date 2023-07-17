@@ -122,9 +122,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
 
         public List<string> LeftPanes { get; } = new List<string>
         {
-            "API Chat",
-            "Web Chat",
-            "Bard"
+            "AI Chat"
         };
 
 
@@ -140,15 +138,10 @@ namespace TerraMours.Chat.Ava.ViewModels {
             set => this.RaiseAndSetIfChanged(ref _selectedRightPane, value);
         }
 
-        public List<string> RightPanes { get; } = new List<string>
-        {
-            "Prompt Editor",
-            "Preview"
-        };
 
         public List<string> LogPanes { get; } = new List<string>
         {
-            "Chat List"
+            "会话列表"
         };
 
         private string _selectedLogPain;
@@ -200,8 +193,6 @@ namespace TerraMours.Chat.Ava.ViewModels {
             set => this.RaiseAndSetIfChanged(ref _postMessage, value);
         }
 
-        // CancellationTokenSourceを作成
-        private CancellationTokenSource cts = new CancellationTokenSource();
         #endregion
 
         #region 方法
@@ -308,8 +299,6 @@ namespace TerraMours.Chat.Ava.ViewModels {
 
         public void OpenApiSettings() {
             VMLocator.ChatViewModel.ChatViewIsVisible = false;
-            //VMLocator.WebChatViewModel.WebChatViewIsVisible = false;
-            //VMLocator.WebChatBardViewModel.WebChatBardViewIsVisible = false;
             VMLocator.MainWindowViewModel.ApiSettingIsOpened = true;
         }
 
@@ -336,46 +325,10 @@ namespace TerraMours.Chat.Ava.ViewModels {
         #endregion
 
         #region 服务端接口
-        public async Task ChatRecordList()
-        {
-            using (var httpClient=new HttpClient())
-            {
-                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue( "Bearer", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoidGVycmFtb3Vyc0AxNjMuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiMSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvdXNlcmRhdGEiOiIxIiwibmJmIjoxNjg5MDgyMjk2LCJleHAiOjE2ODk2ODcwOTYsImlzcyI6InRlcnJhbW91cnMiLCJhdWQiOiJ0ZXJyYW1vdXJzIn0.r3igcAspokki6ML1plrPCXjLiczWRI17bTn_0gX688A");
-                httpClient.Timeout = TimeSpan.FromSeconds(200d);
-                var options = new Dictionary<string, object> {
-                    {"pageIndex",1 },
-                    {"pageSize",10 }
-                };
-                string jsonContent = JsonSerializer.Serialize(options);
-                var content = new StringContent(jsonContent, System.Text.Encoding.UTF8, "application/json");
-                var response = await httpClient.PostAsync("http://43.134.164.127:3116/api/v1/Chat/ChatRecordList", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var responseJson = JsonSerializer.Deserialize<JsonElement>(responseBody);
-                    var items = responseJson.GetProperty("data").GetProperty("items");
-                    var chatList= JsonSerializer.Deserialize<ObservableCollection<Models.ChatMessage>>(responseJson.GetProperty("data").GetProperty("items"), new JsonSerializerOptions
-                    {
-                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase, // 设置属性命名策略为驼峰命名规则
-                    });
-                    if (chatList != null)
-                    {
-                        if (VMLocator.ChatViewModel.ChatHistory == null)
-                        {
-                            VMLocator.ChatViewModel.ChatHistory =new ObservableCollection<Models.ChatMessage>( chatList.OrderBy(m => m.CreateDate).ToList());
-                        }
-                        else
-                        VMLocator.ChatViewModel.ChatHistory.AddRange(new ObservableCollection<Models.ChatMessage>(chatList.OrderBy(m => m.CreateDate).ToList()));
-                    }
-                }
-                else
-                {
-                    string errorBody = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Summarize Error: Response status code does not indicate success: {response.StatusCode} ({response.ReasonPhrase}). Response body: {errorBody}");
-                }
-            }
-        }
-
+        /// <summary>
+        /// OpenAI 调用方法
+        /// </summary>
+        /// <returns></returns>
         private async Task PostChatAsync()
         {
             try
@@ -427,7 +380,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                     await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 }
                 VMLocator.ChatViewModel.ChatHistory.Add(new Models.ChatMessage() { ChatRecordId = 2, ConversationId = conversationId, Message = response.Choices.FirstOrDefault().Message.Content, Role = "Assistant", CreateDate = DateTime.Now });
-
+                VMLocator.MainViewModel.PostMessage = "";
             }
             catch (Exception e)
             {
