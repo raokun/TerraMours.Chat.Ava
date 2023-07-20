@@ -15,11 +15,12 @@ using Avalonia.Threading;
 using Avalonia;
 using TerraMours.Chat.Ava.Models;
 using ReactiveUI;
+using TerraMours.Chat.Ava.Models.Class;
 
 namespace TerraMours.Chat.Ava.Views {
     public partial class MainWindow : Window {
         public MainWindowViewModel MainWindowViewModel { get; } = new MainWindowViewModel();
-        DatabaseProcess _dbProcess = new DatabaseProcess();
+        ChatProcess _chatPross = new ChatProcess();
         public MainWindow() {
             InitializeComponent();
             this.Closing += (sender, e) => SaveWindowSizeAndPosition();
@@ -74,11 +75,9 @@ namespace TerraMours.Chat.Ava.Views {
 
 
             if (!File.Exists(settings.DbPath)) {
-                _dbProcess.CreateDatabase();
+                _chatPross.CreateDatabase();
             }
 
-            await _dbProcess.DbLoadToMemoryAsync();
-            await VMLocator.MainViewModel.LoadPhraseItemsAsync();
 
             VMLocator.MainViewModel.SelectedPhraseItem = settings.PhrasePreset;
 
@@ -126,10 +125,9 @@ namespace TerraMours.Chat.Ava.Views {
             this.GetObservable(ClientSizeProperty).Subscribe(size => OnSizeChanged(size));
             _previousWidth = ClientSize.Width;
 
-            await _dbProcess.UpdateChatLogDatabaseAsync();
-
-
-            await _dbProcess.CleanUpEditorLogDatabaseAsync();
+            //Êý¾Ý¼ÓÔØ
+            VMLocator.DataGridViewModel.ChatList=VMLocator.ChatDbcontext.ChatLists.ToObservableCollection();
+            VMLocator.ChatViewModel.ChatHistory = VMLocator.ChatDbcontext.ChatMessages.ToObservableCollection();
 
             if (string.IsNullOrWhiteSpace(VMLocator.MainWindowViewModel.ApiKey)) {
                 var dialog = new ContentDialog() { Title = $"Please enter your API key.", PrimaryButtonText = "OK" };

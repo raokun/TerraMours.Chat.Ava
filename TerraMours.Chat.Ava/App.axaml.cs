@@ -1,7 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using Microsoft.Extensions.DependencyInjection;
 using Splat;
+using System;
+using TerraMours.Chat.Ava.Models;
 using TerraMours.Chat.Ava.ViewModels;
 using TerraMours.Chat.Ava.Views;
 
@@ -17,7 +20,7 @@ namespace TerraMours.Chat.Ava {
             Resources.Add("VMLocator", VMLocator);
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
-                var load= new LoadView {
+                var load = new LoadView {
                     DataContext = new LoadViewModel(),
                 };
                 desktop.MainWindow = load;

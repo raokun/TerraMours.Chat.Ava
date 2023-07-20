@@ -1,0 +1,43 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TerraMours.Chat.Ava.Views.DatabaseSettingsView"
+			 xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+			 x:DataType="vm:DatabaseSettingsViewModel">
+	<Grid HorizontalAlignment="Stretch">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*"/>
+		</Grid.ColumnDefinitions>
+		<TextBlock Grid.Row="0"
+				   Grid.ColumnSpan="2"
+				   Text="Database path :"
+				   Margin="0,25,0,5"/>
+		<TextBlock Grid.Row="1"
+				   Grid.ColumnSpan="2"
+				   Text="{Binding DatabasePath}"
+				   Margin="0,0,0,10"/>
+		<Button Grid.Row="2"
+				Grid.Column="0"
+				Content="Move Database"
+				Margin="0,10,10,10"
+				Command="{Binding MoveDatabaseCommand}"/>
+		<Button Grid.Row="2"
+				Grid.Column="1"
+				Content="Load Database"
+				Margin="0,10,0,10"
+				Command="{Binding LoadDatabaseCommand}"/>
+		<TextBlock Grid.Row="3"
+				   Grid.ColumnSpan="2"
+				   Text="{Binding ProcessLog}"
+				   Margin="0,0,0,10"/>
+	</Grid>
+</UserControl>
