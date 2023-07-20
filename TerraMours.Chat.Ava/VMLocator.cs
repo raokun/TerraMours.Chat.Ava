@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TerraMours.Chat.Ava.Models;
 using TerraMours.Chat.Ava.ViewModels;
 
 namespace TerraMours.Chat.Ava {
@@ -31,6 +32,17 @@ namespace TerraMours.Chat.Ava {
         public static DataGridViewModel DataGridViewModel {
             get=> (_dataGridViewModel ??= new DataGridViewModel());
             set => _dataGridViewModel = value;
+        }
+        private static DatabaseSettingsViewModel _databaseSettingsViewModel;
+        public static DatabaseSettingsViewModel DatabaseSettingsViewModel {
+            get => _databaseSettingsViewModel ??= new DatabaseSettingsViewModel();
+            set => _databaseSettingsViewModel = value;
+        }
+
+        private static ChatDbcontext _chatDbcontext;
+        public static ChatDbcontext ChatDbcontext {
+            get => (_chatDbcontext ??= new ChatDbcontext());
+            set => _chatDbcontext = value;
         }
     }
 }

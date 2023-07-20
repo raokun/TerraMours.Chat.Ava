@@ -19,10 +19,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TerraMours.Chat.Ava.Models;
+using TerraMours.Chat.Ava.Models.Class;
+using TerraMours.Chat.Ava.Views;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public partial class MainViewModel :ViewModelBase{
-        DatabaseProcess _dbProcess = new DatabaseProcess();
+        ChatProcess _chatProcess = new ChatProcess();
         public MainViewModel() {
             PostButtonText = "Post";
 
@@ -196,16 +198,8 @@ namespace TerraMours.Chat.Ava.ViewModels {
         #endregion
 
         #region 方法
-        public async Task LoadPhraseItemsAsync() {
-            var phrases = await _dbProcess.GetPhrasesAsync();
-            PhrasePresetsItems.Clear();
-
-            foreach (var phrase in phrases) {
-                PhrasePresetsItems.Add(phrase);
-            }
-        }
         private async Task LoadChatListAsync(string keyword) {
-            VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync(keyword);
+            VMLocator.DataGridViewModel.ChatList = VMLocator.ChatDbcontext.ChatLists.ToObservableCollection();
         }
 
         private async Task ImportChatLogAsync() {
@@ -222,7 +216,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             if (result.Count > 0) {
                 var selectedFilePath = result[0].Path.LocalPath;
                 try {
-                    var msg = await _dbProcess.ImportCsvToTableAsync(selectedFilePath);
+                    var msg = await _chatProcess.ImportCsvToTableAsync(selectedFilePath);
                     var cdialog = new ContentDialog() { Title = msg, PrimaryButtonText = "OK" };
                     await ContentDialogShowAsync(cdialog);
                 }
@@ -230,7 +224,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                     var cdialog = new ContentDialog() { Title = "Failed to import log." + Environment.NewLine + "Error: " + ex.Message, PrimaryButtonText = "OK" };
                     await ContentDialogShowAsync(cdialog);
                 }
-                VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
+                VMLocator.DataGridViewModel.ChatList = VMLocator.ChatDbcontext.ChatLists.ToObservableCollection();
             }
         }
 
@@ -253,7 +247,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 }
 
                 try {
-                    var msg = await _dbProcess.ExportTableToCsvAsync(selectedFilePath);
+                    var msg = await _chatProcess.ExportTableToCsvAsync(selectedFilePath);
                     var cdialog = new ContentDialog() { Title = msg, PrimaryButtonText = "OK" };
                     await ContentDialogShowAsync(cdialog);
                 }
@@ -281,9 +275,14 @@ namespace TerraMours.Chat.Ava.ViewModels {
             }
 
             try {
-                await _dbProcess.DeleteChatLogDatabaseAsync(VMLocator.DataGridViewModel.SelectedItem.Id);
-                //await VMLocator.ChatViewModel.InitializeChatAsync();
-                VMLocator.DataGridViewModel.ChatList = await _dbProcess.SearchChatDatabaseAsync();
+                var deleRecord = VMLocator.ChatDbcontext.ChatMessages.Where(m => m.ConversationId == VMLocator.DataGridViewModel.SelectedItem.Id);
+                VMLocator.ChatDbcontext.ChatMessages.RemoveRange(deleRecord);
+                var delListItem= VMLocator.ChatDbcontext.ChatLists.FirstOrDefault(m => m.Id == VMLocator.DataGridViewModel.SelectedItem.Id);
+                VMLocator.ChatDbcontext.ChatLists.Remove(delListItem);
+                VMLocator.ChatDbcontext.SaveChanges();
+                VMLocator.ChatViewModel.ChatHistory.Clear();
+                VMLocator.DataGridViewModel.ChatList.Remove(VMLocator.DataGridViewModel.SelectedItem);
+                //VMLocator.DataGridViewModel.ChatList = VMLocator.ChatDbcontext.ChatLists.ToObservableCollection();
             }
             catch (Exception ex) {
                 dialog = new ContentDialog() { Title = "Failed to delete log." + Environment.NewLine + "Error: " + ex.Message, PrimaryButtonText = "OK" };
@@ -309,7 +308,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 PrimaryButtonText = "OK"
             };
 
-            //dialog.Content = new DatabaseSettingsView();
+            dialog.Content = new DatabaseSettingsView();
             await ContentDialogShowAsync(dialog);
         }
 
@@ -338,13 +337,19 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 //创建会话
                 if(VMLocator.DataGridViewModel.ChatList == null)
                 {
-                    VMLocator.DataGridViewModel.ChatList=new ObservableCollection<ChatList> ();
-                    VMLocator.DataGridViewModel.ChatList.Add(new ChatList() { Id=1,Title=(message.Length< 5?message:$"{message.Substring(0,5)}..."), Category = (message.Length < 5 ? message : $"{message.Substring(0, 5)}...") ,Date=DateTime.Now});
+                    var newChat = new ChatList() {Title = (message.Length < 5 ? message : $"{message.Substring(0, 5)}..."), Category = (message.Length < 5 ? message : $"{message.Substring(0, 5)}..."), Date = DateTime.Now };
+                    VMLocator.DataGridViewModel.ChatList = new ObservableCollection<ChatList> {
+                        newChat
+                    };
+                    await VMLocator.ChatDbcontext.ChatLists.AddAsync(newChat);
+                    await VMLocator.ChatDbcontext.SaveChangesAsync();
                 }
                 if (VMLocator.ChatViewModel.ChatHistory == null)
                     VMLocator.ChatViewModel.ChatHistory = new ObservableCollection<Models.ChatMessage>();
-                VMLocator.ChatViewModel.ChatHistory.Add(new Models.ChatMessage() { ChatRecordId = 1, ConversationId = conversationId, Message = message, Role = "User", CreateDate = DateTime.Now });
-                
+                var userMessge = new Models.ChatMessage() { ConversationId = conversationId, Message = message, Role = "User", CreateDate = DateTime.Now };
+                VMLocator.ChatViewModel.ChatHistory.Add(userMessge);
+                await VMLocator.ChatDbcontext.ChatMessages.AddAsync(userMessge);
+                await VMLocator.ChatDbcontext.SaveChangesAsync();
                 //根据配置中的CONTEXT_COUNT 查询上下文
                 var messages = new List<OpenAI.ObjectModels.RequestModels.ChatMessage>();
                 messages.Add(OpenAI.ObjectModels.RequestModels.ChatMessage.FromUser(message));
@@ -379,11 +384,19 @@ namespace TerraMours.Chat.Ava.ViewModels {
                     };
                     await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 }
-                VMLocator.ChatViewModel.ChatHistory.Add(new Models.ChatMessage() { ChatRecordId = 2, ConversationId = conversationId, Message = response.Choices.FirstOrDefault().Message.Content, Role = "Assistant", CreateDate = DateTime.Now });
+                var assistant = new Models.ChatMessage() {  ConversationId = conversationId, Message = response.Choices.FirstOrDefault().Message.Content, Role = "Assistant", CreateDate = DateTime.Now };
+                VMLocator.ChatViewModel.ChatHistory.Add(assistant);
+                await VMLocator.ChatDbcontext.ChatMessages.AddAsync(assistant);
+                await VMLocator.ChatDbcontext.SaveChangesAsync();
                 VMLocator.MainViewModel.PostMessage = "";
             }
             catch (Exception e)
             {
+                var dialog = new ContentDialog() {
+                    Title = $"接口调用失败，报错内容: {e.ToString()}",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
             }
         }
         #endregion

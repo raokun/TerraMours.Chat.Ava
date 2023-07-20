@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
+	<AvaloniaResource Include="Assets\Styles.axaml" />
 	<AvaloniaResource Include="Assets\Lato-Regular.ttf" />
 	<AvaloniaResource Include="Assets\migu-1m-regular.ttf" />
   </ItemGroup>
@@ -42,6 +43,11 @@
 	<PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.0-d1" />
 	<PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.0-d1" />
 	<PackageReference Include="Betalgo.OpenAI" Version="7.1.2-beta" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.0-preview.6.23329.4" />
+	<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.6.23329.4">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
 

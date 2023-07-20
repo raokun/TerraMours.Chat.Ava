@@ -63,24 +63,10 @@ namespace TerraMours.Chat.Ava.ViewModels {
             }
         }
         #endregion
-        DatabaseProcess _dbProcess = new DatabaseProcess();
         private async void ShowChatLogAsync(long _selectedItem) {
             var _chatViewModel = VMLocator.ChatViewModel;
 
             if (!_chatViewModel.ChatIsRunning) {
-                var result = await _dbProcess.GetChatLogDatabaseAsync(_selectedItem);
-
-                _chatViewModel.ReEditIsOn = false;
-                _chatViewModel.ChatTitle = result[0];
-                if (!string.IsNullOrWhiteSpace(result[1])) {
-                    _chatViewModel.ConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[1]);
-                }
-                _chatViewModel.ChatCategory = result[3];
-                _chatViewModel.LastPrompt = result[4];
-                if (!string.IsNullOrWhiteSpace(result[5])) {
-                    _chatViewModel.LastConversationHistory = JsonSerializer.Deserialize<List<Dictionary<string, object>>>(result[5]);
-                }
-
                 if (VMLocator.MainViewModel.SelectedLeftPane != "AI Chat") {
                     VMLocator.MainViewModel.SelectedLeftPane = "AI Chat";
                 }
