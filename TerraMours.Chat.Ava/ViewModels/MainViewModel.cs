@@ -364,7 +364,14 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 {
                     Messages = messages,
                     Model = AppSettings.Instance.ApiModel,
-                    MaxTokens = AppSettings.Instance.ApiMaxTokens,
+                    MaxTokens = AppSettings.Instance.ApiMaxTokensIsEnable ? AppSettings.Instance.ApiMaxTokens:null,
+                    TopP = AppSettings.Instance.ApiTopPIsEnable ? (float?)AppSettings.Instance.ApiTopP:null,
+                    N = AppSettings.Instance.ApiNIsEnable ? AppSettings.Instance.ApiN:null,
+                    PresencePenalty = AppSettings.Instance.ApiPresencePenaltyIsEnable ? (float?)AppSettings.Instance.ApiPresencePenalty:null,
+                    FrequencyPenalty= AppSettings.Instance.ApiFrequencyPenaltyIsEnable ? (float?)AppSettings.Instance.ApiFrequencyPenalty:null,
+                    Stop = AppSettings.Instance.ApiStopIsEnable? AppSettings.Instance.ApiStop:null,
+                    Temperature=AppSettings.Instance.ApiTemperatureIsEnable?(float?) AppSettings.Instance.ApiTemperature:null,
+                    LogitBias= AppSettings.Instance.ApiLogitBiasIsEnable? AppSettings.Instance.ApiLogitBias:null,
                 });
                 if (response == null)
                 {
