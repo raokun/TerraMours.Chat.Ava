@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish xmlns="https://github.com/avaloniaui">
+	<Executables>
+		<Executable Identifier="TerraMoursDeskTop"
+					MainClass="TerraMoursDeskTop.Program"
+					OutputName="TerraMoursDeskTop" />
+	</Executables>
+	<VersionInfo CompanyName="TerraMours"
+				 Description="基于Avalonia的智能AI会话项目"
+				 ProductName="TerraMoursDeskTop"
+				 AssemblyVersion="1.0.0"
+				 FileVersion="1.0.0" />
+</Publish>
