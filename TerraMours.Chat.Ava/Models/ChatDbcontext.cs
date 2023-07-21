@@ -30,7 +30,11 @@ namespace TerraMours.Chat.Ava.Models {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = true;
         }
-
+        /// <summary>
+        /// 检查表是否存在
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public bool CheckIfTableExists<T>() where T : class {
             var tableExists = this.Model.FindEntityType(typeof(T)) != null;
 

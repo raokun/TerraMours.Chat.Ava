@@ -2,9 +2,19 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 					xmlns:system="clr-namespace:System;assembly=System.Runtime">
     <!-- Add Resources Here -->
+	<system:String x:Key="My.Strings.PhrasePresets">短语预设 :</system:String>
 	<system:String x:Key="My.Strings.ConversationHitoryInfo">
 		“对话历史限制”是一个客户端选项，而不是API参数。
 		当超过设定值（令牌）时，
 		会话历史记录将被自动总结。
+	</system:String>
+	<system:String x:Key="My.Strings.DatabaseInfo">将数据库文件移动到云文件夹（例如DropBox）并从另一台计算机加载，可以同步聊天日志和短语预设。</system:String>
+	<system:String x:Key="My.Strings.ChatScreenInfo">请显示聊天屏幕。</system:String>
+	<system:String x:Key="My.Strings.DatabaseUpdate">数据库文件已更新。此操作将只发生一次。数据库已备份。</system:String>
+	<system:String x:Key="My.Strings.SystemMessage">You are ChatGPT, a large scale language model trained by OpenAI. Think carefully Step by Step through the user's instructions and answer in Markdown.</system:String>
+	<system:String x:Key="My.Strings.SystemMessageInfo">
+		System messages are not set.
+		- To set it up, type '#System' in the top prompt area followed by the message.
+		- To delete, send only '#System'.
 	</system:String>
 </ResourceDictionary>
