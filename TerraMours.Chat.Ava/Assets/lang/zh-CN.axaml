@@ -17,4 +17,5 @@
 		- To set it up, type '#System' in the top prompt area followed by the message.
 		- To delete, send only '#System'.
 	</system:String>
+	<system:String x:Key="My.Strings.SystemMessageTitle">系统提示词</system:String>
 </ResourceDictionary>
