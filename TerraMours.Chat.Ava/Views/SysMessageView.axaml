@@ -1,0 +1,65 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TerraMours.Chat.Ava.Views.SysMessageView"
+			 xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+			 x:DataType="vm:MainViewModel">
+	<Grid >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*"/>
+			<RowDefinition Height="Auto"/>
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0">
+			<!--<Button ToolTip.Tip="System message"
+				HorizontalAlignment="Right"
+				VerticalAlignment="Center"
+				BorderThickness="0"
+				Width="28"
+				Height="28"
+				Margin="0,0,90,0"
+				Command="{Binding SystemMessageCommand}">
+				<Image Source="/Assets/iconSystem.png"
+						VerticalAlignment="Center" />
+			</Button>
+			<Button ToolTip.Tip="API settings"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					BorderThickness="0"
+					Width="28"
+					Height="28"
+					Margin="0,0,60,0"
+					Command="{Binding OpenApiSettingsCommand}">
+				<Image Source="/Assets/iconSetting.png"
+						VerticalAlignment="Center" />
+			</Button>
+			<Button ToolTip.Tip="Database settings"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					BorderThickness="0"
+					Width="28"
+					Height="28"
+					Margin="0,0,30,0"
+					Command="{Binding ShowDatabaseSettingsCommand}">
+				<Image Source="/Assets/iconDatabase.png"
+						VerticalAlignment="Center" />
+			</Button>
+			<Button ToolTip.Tip="Keyboard shortcuts"
+					HorizontalAlignment="Right"
+					VerticalAlignment="Center"
+					BorderThickness="0"
+					Width="28"
+					Height="28"
+					Command="{Binding HotKeyDisplayCommand}">
+				<Image Source="/Assets/iconKeyboard.png"
+						VerticalAlignment="Center" />
+			</Button>-->
+		</Grid>
+		<Grid Grid.Row="1">
+			<TextBox Grid.Column="0" Name="SendText" AcceptsReturn="True" MaxHeight="500"  TextWrapping="Wrap" Text="{Binding SystemMessage}"
+                             Watermark="Write here"
+                             BorderBrush="Transparent" />
+		</Grid>
+	</Grid>
+</UserControl>

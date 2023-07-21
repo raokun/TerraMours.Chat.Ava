@@ -36,23 +36,16 @@ namespace TerraMours.Chat.Ava.ViewModels {
             ExportChatLogCommand = ReactiveCommand.CreateFromTask(ExportChatLogAsync);
             DeleteChatLogCommand = ReactiveCommand.CreateFromTask(DeleteChatLogAsync);
             //配置
-            SystemMessageCommand = ReactiveCommand.Create(InsertSystemMessage);
+            SystemMessageCommand = ReactiveCommand.CreateFromTask(InsertSystemMessageAsync);
             HotKeyDisplayCommand = ReactiveCommand.CreateFromTask(HotKeyDisplayAsync);
             OpenApiSettingsCommand = ReactiveCommand.Create(OpenApiSettings);
             ShowDatabaseSettingsCommand = ReactiveCommand.CreateFromTask(ShowDatabaseSettingsAsync);
             //聊天
             PostCommand = ReactiveCommand.CreateFromTask(PostChatAsync);
-            //PostCommand = ReactiveCommand.CreateFromTask(ChatRecordList);
         }
 
         public async Task<ContentDialogResult> ContentDialogShowAsync(ContentDialog dialog) {
-            //VMLocator.ChatViewModel.ChatViewIsVisible = false;
-            //VMLocator.WebChatViewModel.WebChatViewIsVisible = false;
-            //VMLocator.WebChatBardViewModel.WebChatBardViewIsVisible = false;
             var dialogResult = await dialog.ShowAsync();
-            //VMLocator.ChatViewModel.ChatViewIsVisible = true;
-            //VMLocator.WebChatViewModel.WebChatViewIsVisible = true;
-            //VMLocator.WebChatBardViewModel.WebChatBardViewIsVisible = true;
             return dialogResult;
         }
         #region 事件
@@ -195,6 +188,12 @@ namespace TerraMours.Chat.Ava.ViewModels {
             set => this.RaiseAndSetIfChanged(ref _postMessage, value);
         }
 
+        private string _systemMessage;
+        public string SystemMessage {
+            get => _systemMessage;
+            set => this.RaiseAndSetIfChanged(ref _systemMessage, value);
+        }
+
         #endregion
 
         #region 方法
@@ -291,9 +290,22 @@ namespace TerraMours.Chat.Ava.ViewModels {
         }
 
         #region 配置
-        private void InsertSystemMessage() {
-            Application.Current!.TryFindResource("My.Strings.SystemMessage", out object resource1);
-           // VMLocator.EditorViewModel.Editor1Text = $"#System{Environment.NewLine}{Environment.NewLine}{resource1}";
+        private async Task InsertSystemMessageAsync() {
+            var systemMessage = SystemMessage;
+            if (string.IsNullOrEmpty(systemMessage)) {
+                Application.Current!.TryFindResource("My.Strings.SystemMessage", out object resource);
+                SystemMessage = (string)resource;
+            }
+
+            Application.Current!.TryFindResource("My.Strings.SystemMessageTitle", out object resource1);
+
+            var dialog = new ContentDialog() {
+                Title = resource1,
+                PrimaryButtonText = "OK"
+            };
+
+            dialog.Content = new SysMessageView();
+            await ContentDialogShowAsync(dialog);
         }
 
         public void OpenApiSettings() {

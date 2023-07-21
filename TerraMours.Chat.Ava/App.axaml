@@ -31,11 +31,17 @@
 		<StyleInclude Source="avares://AvaloniaEdit/Themes/Fluent/AvaloniaEdit.xaml" />
 		<StyleInclude Source="avares://TerraMours.Chat.Ava/Assets/CustomDataGridStyles.axaml"/>
 		<StyleInclude Source="avares://TerraMours.Chat.Ava/Assets/Styles.axaml" />
-		<dialogHostAvalonia:DialogHostStyles />
+		<dialogHostAvalonia:DialogHostStyles/>
 	</Application.Styles>
 	<Application.Resources>
-		<Color x:Key="SystemAccentColor">rgb(155, 138, 255)</Color>
-		<Color x:Key="SystemAccentColorDark1">rgb(155, 138, 255)</Color>
+		<Color x:Key="SystemAccentColor">Blue</Color>
+		<Color x:Key="SystemAccentColorLight1">LightBlue</Color>
+		<!--弹框下层背景-->
+		<Color x:Key="ContentDialogBackground">rgb(42, 43, 55)</Color>
+		<!--弹框上层背景-->
+		<Color x:Key="ContentDialogTopOverlay">rgb(62, 63, 75)</Color>
+		<!--蒙版颜色-->
+		<!--<Color x:Key="ContentDialogSmokeFill">rgb(155, 138, 255)</Color>-->
 		<Color x:Key="SystemAltMediumLowColor">rgb(52, 53, 65)</Color>
 		<Color x:Key="ApplicationPageBackgroundThemeBrush">rgb(52, 53, 65)</Color>
 		<Color x:Key="ControlStrokeColorDefaultBrush">rgb(94, 95, 109)</Color>
@@ -53,7 +59,6 @@
 		<Color x:Key="MenuFlyoutItemBackgroundPointerOver">rgb(74, 75, 89)</Color>
 		<Color x:Key="MenuFlyoutPresenterBorderBrush">rgb(44, 44, 54)</Color>
 		<Color x:Key="ComboBoxDropDownBackground">rgb(52, 53, 65)</Color>
-		<Color x:Key="ContentDialogBackground">rgb(42, 43, 55)</Color>
 		<Color x:Key="SolidBackgroundFillColorBase">rgb(52, 53, 65)</Color>
 		<Color x:Key="SolidBackgroundFillColorSecondary">rgb(52, 53, 65)</Color>
 		<Color x:Key="TextControlButtonForeground">rgb(126, 128, 145)</Color>
