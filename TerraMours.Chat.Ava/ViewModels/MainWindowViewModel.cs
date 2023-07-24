@@ -40,7 +40,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             ApiStop = "";
             ApiLogitBias = "";
             ApiModel = "gpt-3.5-turbo";
-            ApiUrl = "https://api.openai.com/v1/chat/completions";
+            ApiUrl = "https://api.openai.com";
             ApiKey = null;
             MaxContentLength = 3072;
 

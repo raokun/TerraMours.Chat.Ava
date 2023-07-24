@@ -15,12 +15,12 @@
 		<vm:LoadViewModel />
 	</Design.DataContext>
 	<Grid>
-		<Image
+		<!--<Image
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Source="../Assets/loading.png"
             Stretch="UniformToFill"
-            Opacity="0.5"/>
+            Opacity="0.5"/>-->
 		<StackPanel
             HorizontalAlignment="Center"
             VerticalAlignment="Center"

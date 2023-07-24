@@ -399,7 +399,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                     var dialog = new ContentDialog()
                     {
                         Title = $"接口调用失败，报错内容: {response.Error.Message}",
-                        PrimaryButtonText = "Ok"
+                        PrimaryButtonText = "Ok",
                     };
                     await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 }

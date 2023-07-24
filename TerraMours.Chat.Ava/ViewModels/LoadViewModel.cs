@@ -20,7 +20,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             // 模拟登录加载过程
             for (int i = 0; i <= 100; i++) {
                 Progress = i;
-                await Task.Delay(100); // 延迟一段时间，以模拟加载过程
+                await Task.Delay(10); // 延迟一段时间，以模拟加载过程
             }
             ToMainAction?.Invoke();
         }
