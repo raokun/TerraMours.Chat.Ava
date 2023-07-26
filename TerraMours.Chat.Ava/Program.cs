@@ -1,4 +1,5 @@
 ﻿using Avalonia;
+using Avalonia.Media;
 using Avalonia.ReactiveUI;
 using System;
 
@@ -12,11 +13,12 @@ namespace TerraMours.Chat.Ava {
             .StartWithClassicDesktopLifetime(args);
 
         // Avalonia configuration, don't remove; also used by visual designer.
-        public static AppBuilder BuildAvaloniaApp()
-            => AppBuilder.Configure<App>()
+        public static AppBuilder BuildAvaloniaApp() {
+            return AppBuilder.Configure<App>()
                 .UsePlatformDetect()
                 .WithInterFont()
                 .LogToTrace()
                 .UseReactiveUI();
+        }
     }
 }
