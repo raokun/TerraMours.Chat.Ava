@@ -21,10 +21,9 @@ namespace TerraMours.Chat.Ava
         /// 创建并初始化数据库
         /// </summary>
         public void CreateDatabase() {
-            using (var context = new ChatDbcontext()) {
-                context.Database.Migrate();
-                VMLocator.ChatDbcontext = context;
-            }
+            var context = new ChatDbcontext();
+            context.Database.Migrate();
+            VMLocator.ChatDbcontext = context;
         }
 
         /// <summary>
