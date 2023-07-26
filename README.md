@@ -70,9 +70,11 @@
 * ChatView.axaml  **聊天界面**
 * ApiSettingsView.axaml  **API配置**
 
-#项目截图
-![image-20230718225201652](https://www.raokun.top/upload/2023/07/image-20230718225201652.png)
-
+# 项目截图
+windows
+![windows](https://www.raokun.top/upload/2023/07/image-20230718225201652.png)
+openKylin系统-linux
+![linux](https://www.raokun.top/upload/2023/07/image-20230725181623426.png)
 
 技术总结记录在我的博客中
 [基于Avalonia 11.0.0+ReactiveUI 的跨平台项目开发1-通用框架](https://www.raokun.top/archives/ji-yu-avalonia1100reactiveui-de-kua-ping-tai-xiang-mu-kai-fa-1--tong-yong-kuang-jia)
