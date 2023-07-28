@@ -20,6 +20,7 @@
 			</ResourceDictionary.MergedDictionaries>
 		</ResourceDictionary>
 		<valueConverter:ChatBackgroundConverter x:Key="ChatBackgroundConverter" />
+		<FontFamily x:Key="diyFont">avares://TerraMours.Chat.Ava/Assets/JustFont.ttf#jf-openhuninn-1.0</FontFamily>
 	</Application.Resources>
 	
     <Application.Styles>
