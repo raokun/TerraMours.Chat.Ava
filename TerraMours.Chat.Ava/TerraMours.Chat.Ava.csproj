@@ -11,8 +11,6 @@
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
 	<AvaloniaResource Include="Assets\Styles.axaml" />
-	<EmbeddedResource Include="Assets\Lato-Regular.ttf" />
-	<EmbeddedResource Include="Assets\migu-1m-regular.ttf" />
   </ItemGroup>
 
   <ItemGroup>

@@ -28,7 +28,7 @@
                                     SaveScrollValueWhenContentUpdated="True"
 									TextElement.FontSize="16"
 									TextElement.Foreground="White"
-									TextElement.FontFamily="宋体,国标黑体,Simsun,微软雅黑,Microsoft YaHei,苹方-简,宋体-简"
+									TextElement.FontFamily="{StaticResource diyFont}"
                                     Markdown="{Binding Message}">
 									<md:MarkdownScrollViewer.Styles>
 										<Style Selector="ctxt|CCode">
