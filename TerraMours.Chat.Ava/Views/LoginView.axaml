@@ -1,0 +1,61 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="TerraMours.Chat.Ava.Views.LoginView"
+        Title="LoginView"
+		xmlns:vm="using:TerraMours.Chat.Ava.ViewModels"
+		x:DataType="vm:LoginViewModel"
+		ExtendClientAreaToDecorationsHint="True"
+		ExtendClientAreaChromeHints="NoChrome"
+		ExtendClientAreaTitleBarHeightHint="-1"
+		SystemDecorations="None"
+        WindowStartupLocation="CenterScreen"
+		Height="440"
+        Width="780"
+        MaxWidth="780"
+        MaxHeight="440"
+        MinWidth="780"
+        MinHeight="440">
+	<Window.Styles>
+		<Style Selector="Window">
+			<Setter Property="BorderThickness" Value="0" />
+			<Setter Property="Padding" Value="0" />
+			<Setter Property="Background" Value="Transparent" />
+			<Setter Property="BorderBrush" Value="Transparent" />
+		</Style>
+	</Window.Styles>
+	<StackPanel>
+		<Border Background="White" Name="LoginBorder" Opacity="1" CornerRadius="10" >
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="*"/>
+					<ColumnDefinition Width="*"/>
+				</Grid.ColumnDefinitions>
+				<Grid Grid.Column="0">
+					<Image
+					HorizontalAlignment="Stretch"
+					VerticalAlignment="Stretch"
+					Source="../Assets/hero.png"
+					Stretch="UniformToFill"
+					Opacity="1"/>
+				</Grid>
+				<Grid Grid.Column="1" VerticalAlignment="Center">
+					<Grid.RowDefinitions>
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+						<RowDefinition Height="Auto" />
+					</Grid.RowDefinitions>
+					<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="用户登陆" HorizontalAlignment="Center" Margin="0,30,0,30"/>
+					<TextBox Grid.Row="1" AcceptsReturn="False" Watermark="请输入用户名" Classes.clearButton="True" Text="{Binding UserAccount}" Margin="0,0,0,15"/>
+					<TextBox Grid.Row="2" AcceptsReturn="False" Watermark="请输入密码" Classes.clearButton="True" Text="{Binding UserPassword}" Margin="0,0,0,15"/>
+					<Button Grid.Row="3"  Content="登陆" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding LoginCommand}"/>
+					<Button Grid.Row="4"  Content="退出" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding ExitCommand}"/>
+				</Grid>
+			</Grid>
+		</Border>
+	</StackPanel>
+</Window>

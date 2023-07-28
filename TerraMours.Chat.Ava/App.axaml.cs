@@ -20,11 +20,11 @@ namespace TerraMours.Chat.Ava {
             Resources.Add("VMLocator", VMLocator);
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop) {
-                var load = new LoadView {
-                    DataContext = new LoadViewModel(),
+                var load = new LoginView {
+                    DataContext = new LoginViewModel(),
                 };
                 desktop.MainWindow = load;
-                VMLocator.LoadViewModel.ToMainAction = () =>
+                VMLocator.LoginViewModel.LoginToMainAction = () =>
                 {
                     desktop.MainWindow = new MainWindow();
                     desktop.MainWindow.Show();
