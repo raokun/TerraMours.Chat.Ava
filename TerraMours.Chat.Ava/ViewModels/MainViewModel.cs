@@ -38,6 +38,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             ImportChatLogCommand = ReactiveCommand.CreateFromTask(ImportChatLogAsync);
             ExportChatLogCommand = ReactiveCommand.CreateFromTask(ExportChatLogAsync);
             DeleteChatLogCommand = ReactiveCommand.CreateFromTask(DeleteChatLogAsync);
+            GptChatConversationListCommand= ReactiveCommand.CreateFromTask(GptChatConversationList);
             //配置
             SystemMessageCommand = ReactiveCommand.CreateFromTask(InsertSystemMessageAsync);
             HotKeyDisplayCommand = ReactiveCommand.CreateFromTask(HotKeyDisplayAsync);
@@ -68,6 +69,8 @@ namespace TerraMours.Chat.Ava.ViewModels {
         public ICommand OpenApiSettingsCommand { get; }
         public ICommand ShowDatabaseSettingsCommand { get; }
         public ICommand HotKeyDisplayCommand { get; }
+
+        public ICommand GptChatConversationListCommand { get; }
         #endregion
         #region 属性
         private string _searchLogKeyword;
@@ -441,8 +444,6 @@ namespace TerraMours.Chat.Ava.ViewModels {
             await VMLocator.ChatDbcontext.ChatMessages.AddAsync(userMessge);
             await VMLocator.ChatDbcontext.SaveChangesAsync();
             TMHttpClient http = new TMHttpClient();
-            http.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", VMLocator.AppToken);
-
             var obj = new { Prompt =PostMessage, SystemMessage =SystemMessage, ConversationId =VMLocator.DataGridViewModel.SelectedItemId, Model =AppSettings.Instance.ApiModel, ModelType =1};
             var res =await http.PostAsync<Models.ChatMessage>("/api/v1/Chat/ChatCompletion", obj);
             if (res.StatusCode != 200) {
@@ -460,6 +461,34 @@ namespace TerraMours.Chat.Ava.ViewModels {
             await VMLocator.ChatDbcontext.ChatMessages.AddAsync(assistant);
             await VMLocator.ChatDbcontext.SaveChangesAsync();
             VMLocator.MainViewModel.PostMessage = "";
+        }
+
+        private async Task GptChatConversationList()
+        {
+            TMHttpClient http = new TMHttpClient();
+            var obj = new { QueryString = SearchLogKeyword, PageIndex = 1, PageSize = 10};
+            var res = await http.PostAsync<PagedRes<ChatConversationRes>>("/api/v1/Chat/ChatConversationList", obj);
+            if (res.StatusCode != 200) {
+                var dialog = new ContentDialog() {
+                    Title = $"接口报错：code：{res.StatusCode}.Msg:{JsonSerializer.Serialize(res.Message + res.Errors, new JsonSerializerOptions() {
+                        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                    })}",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+                return;
+            }
+            ObservableCollection<ChatList> resList =
+                new ObservableCollection<ChatList>();
+            foreach (var chatConversationRes in res.Data.Items)
+            {
+                ChatList i=new ChatList();
+                i.Id = chatConversationRes.ConversationId;
+                i.Category = chatConversationRes.ConversationName;
+                i.Title= chatConversationRes.ConversationName;
+                resList.Add(i);
+            }
+            VMLocator.DataGridViewModel.ChatList = resList;
         }
         #endregion
         #endregion

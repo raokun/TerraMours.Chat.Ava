@@ -72,5 +72,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 }
             }
         }
+
+
     }
 }

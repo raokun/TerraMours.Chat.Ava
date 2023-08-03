@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Splat;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -7,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Web;
 using TerraMours.Chat.Ava.Models.Class;
+using static System.Net.WebRequestMethods;
 
 namespace TerraMours.Chat.Ava.Models {
     public  class TMHttpClient {
@@ -14,6 +16,10 @@ namespace TerraMours.Chat.Ava.Models {
 
         public TMHttpClient() {
             httpClient = new HttpClient();
+            if (!string.IsNullOrEmpty(VMLocator.AppToken))
+            {
+                httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", VMLocator.AppToken);
+            }
         }
         public  async Task<ApiResponse<TResponse>> PostAsync<TResponse>(string url, object dto) {
             var jsonContent = new StringContent(

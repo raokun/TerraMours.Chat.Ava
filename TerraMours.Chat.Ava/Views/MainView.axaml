@@ -223,6 +223,7 @@
 		<MenuFlyout x:Key="ChatLogMenuFlyout" Placement="Bottom">
 			<MenuItem Header="Import from CSV" Command="{Binding ImportChatLogCommand}"/>
 			<MenuItem Header="Export to CSV" Command="{Binding ExportChatLogCommand}"/>
+            <MenuItem Header="同步云端列表" Command="{Binding GptChatConversationListCommand}"/>
 		</MenuFlyout>
 	</UserControl.Resources>
 </UserControl>
