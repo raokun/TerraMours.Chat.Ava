@@ -6,9 +6,13 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using TerraMours.Chat.Ava.Models;
+using TerraMours.Chat.Ava.Models.Class;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public partial class LoginViewModel : ViewModelBase {
@@ -38,7 +42,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
 
         #region 方法
         private async Task Login() {
-            if (string.IsNullOrEmpty(UserAccount) || string.IsNullOrEmpty(UserAccount)) {
+            if (string.IsNullOrEmpty(UserAccount) || string.IsNullOrEmpty(UserPassword)) {
                 var dialog = new ContentDialog() {
                     Title = "用户名或密码为空。",
                     PrimaryButtonText = "Ok"
@@ -46,6 +50,23 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 return;
             }
+
+            TMHttpClient http = new TMHttpClient();
+            var obj = new { UserAccount = UserAccount, UserPassword = UserPassword };
+            var res = await http.PostAsync<LoginRes>("/api/v1/Login/Login", obj);
+            if (res.StatusCode != 200)
+            {
+                var dialog = new ContentDialog() {
+                    Title = $"接口报错：code：{res.StatusCode}.Msg:{JsonSerializer.Serialize(res.Errors, new JsonSerializerOptions() {
+                        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                    })}",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+                return;
+            }
+
+            VMLocator.AppToken = res.Data.Token;
             VMLocator.LoginViewModel.LoginToMainAction?.Invoke();
         }
 

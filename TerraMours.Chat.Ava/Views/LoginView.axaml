@@ -27,7 +27,7 @@
 		</Style>
 	</Window.Styles>
 	<StackPanel>
-		<Border Background="White" Name="LoginBorder" Opacity="1" CornerRadius="10" >
+		<Border Background="rgb(52, 53, 65)" Name="LoginBorder" Opacity="1" CornerRadius="10" >
 			<Grid>
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition Width="*"/>
@@ -50,8 +50,8 @@
 						<RowDefinition Height="Auto" />
 					</Grid.RowDefinitions>
 					<TextBlock Grid.Row="0" Grid.ColumnSpan="5" Text="用户登陆" HorizontalAlignment="Center" Margin="0,30,0,30"/>
-					<TextBox Grid.Row="1" AcceptsReturn="False" Watermark="请输入用户名" Classes.clearButton="True" Text="{Binding UserAccount}" Margin="0,0,0,15"/>
-					<TextBox Grid.Row="2" AcceptsReturn="False" Watermark="请输入密码" Classes.clearButton="True" Text="{Binding UserPassword}" Margin="0,0,0,15"/>
+					<TextBox Grid.Row="1" AcceptsReturn="False" Watermark="请输入用户名" Classes.clearButton="True" Text="{Binding UserAccount}" Margin="10,0,10,15"/>
+					<TextBox Grid.Row="2" AcceptsReturn="False" Watermark="请输入密码" Classes.clearButton="True" Text="{Binding UserPassword}" Margin="10,0,10,15"/>
 					<Button Grid.Row="3"  Content="登陆" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding LoginCommand}"/>
 					<Button Grid.Row="4"  Content="退出" HorizontalAlignment="Center" Margin="0,0,0,15" Width="200" Command="{Binding ExitCommand}"/>
 				</Grid>

@@ -14,13 +14,16 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using TerraMours.Chat.Ava.Models;
 using TerraMours.Chat.Ava.Models.Class;
 using TerraMours.Chat.Ava.Views;
+using Tmds.DBus.Protocol;
 
 namespace TerraMours.Chat.Ava.ViewModels {
     public partial class MainViewModel :ViewModelBase{
@@ -41,7 +44,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             OpenApiSettingsCommand = ReactiveCommand.Create(OpenApiSettings);
             ShowDatabaseSettingsCommand = ReactiveCommand.CreateFromTask(ShowDatabaseSettingsAsync);
             //聊天
-            PostCommand = ReactiveCommand.CreateFromTask(PostChatAsync);
+            PostCommand = ReactiveCommand.CreateFromTask(PostGptChatAsync);
         }
 
         public async Task<ContentDialogResult> ContentDialogShowAsync(ContentDialog dialog) {
@@ -417,6 +420,46 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 };
                 await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
             }
+        }
+        /// <summary>
+        /// 平台聊天
+        /// </summary>
+        /// <returns></returns>
+        private async Task PostGptChatAsync()
+        {
+            if (string.IsNullOrEmpty(VMLocator.AppToken))
+            {
+                var dialog = new ContentDialog() {
+                    Title = $"登陆信息为空/已过期",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+                return;
+            }
+            var userMessge = new Models.ChatMessage() { ConversationId = VMLocator.DataGridViewModel.SelectedItemId, Message = PostMessage, Role = "User", CreateDate = DateTime.Now };
+            VMLocator.ChatViewModel.ChatHistory.Add(userMessge);
+            await VMLocator.ChatDbcontext.ChatMessages.AddAsync(userMessge);
+            await VMLocator.ChatDbcontext.SaveChangesAsync();
+            TMHttpClient http = new TMHttpClient();
+            http.httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", VMLocator.AppToken);
+
+            var obj = new { Prompt =PostMessage, SystemMessage =SystemMessage, ConversationId =VMLocator.DataGridViewModel.SelectedItemId, Model =AppSettings.Instance.ApiModel, ModelType =1};
+            var res =await http.PostAsync<Models.ChatMessage>("/api/v1/Chat/ChatCompletion", obj);
+            if (res.StatusCode != 200) {
+                var dialog = new ContentDialog() {
+                    Title = $"接口报错：code：{res.StatusCode}.Msg:{JsonSerializer.Serialize(res.Message+res.Errors, new JsonSerializerOptions() {
+                        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                    })}",
+                    PrimaryButtonText = "Ok"
+                };
+                await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
+                return;
+            }
+            var assistant = new Models.ChatMessage() { ConversationId = res.Data.ConversationId, Message = res.Data.Message, Role = "Assistant", CreateDate = DateTime.Now };
+            VMLocator.ChatViewModel.ChatHistory.Add(assistant);
+            await VMLocator.ChatDbcontext.ChatMessages.AddAsync(assistant);
+            await VMLocator.ChatDbcontext.SaveChangesAsync();
+            VMLocator.MainViewModel.PostMessage = "";
         }
         #endregion
         #endregion

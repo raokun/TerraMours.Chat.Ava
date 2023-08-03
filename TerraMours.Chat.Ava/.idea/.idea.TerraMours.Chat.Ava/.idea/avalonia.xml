@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AvaloniaProject">
+    <option name="projectPerEditor">
+      <map>
+        <entry key="Views/DataGridView.axaml" value="TerraMours.Chat.Ava.csproj" />
+        <entry key="Views/LoadView.axaml" value="TerraMours.Chat.Ava.csproj" />
+        <entry key="Views/LoginView.axaml" value="TerraMours.Chat.Ava.csproj" />
+        <entry key="Views/MainView.axaml" value="TerraMours.Chat.Ava.csproj" />
+        <entry key="Views/MainWindow.axaml" value="TerraMours.Chat.Ava.csproj" />
+      </map>
+    </option>
+  </component>
+</project>

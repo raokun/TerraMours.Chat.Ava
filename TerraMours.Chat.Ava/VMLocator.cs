@@ -48,5 +48,11 @@ namespace TerraMours.Chat.Ava {
             get => (_chatDbcontext ??= new ChatDbcontext());
             set => _chatDbcontext = value;
         }
+
+        private static string _appToken;
+        public static string AppToken {
+            get => (_appToken);
+            set => _appToken = value;
+        }
     }
 }

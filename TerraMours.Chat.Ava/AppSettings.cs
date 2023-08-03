@@ -69,6 +69,9 @@ namespace TerraMours.Chat.Ava {
         public bool ApiLogitBiasIsEnable { get; set; }
         public bool MaxContentLengthIsEnable { get; set; }
 
+        //服务端接口配置
+        public string BaseUrl { get; set; }
+
         // DefaultSetting
         public AppSettings() {
             EditorMode = false;
@@ -113,6 +116,8 @@ namespace TerraMours.Chat.Ava {
             ApiStopIsEnable = false;
             ApiLogitBiasIsEnable = false;
             MaxContentLengthIsEnable = false;
+
+            BaseUrl = "https://api.terramours.site";
         }
 
         private string GetAppDataDirectory() {
