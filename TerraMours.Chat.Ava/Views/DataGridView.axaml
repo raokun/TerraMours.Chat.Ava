@@ -23,8 +23,8 @@
 				<DataGridTextColumn Foreground="rgb(155,155,155)"
 								  FontSize="12"
 									Binding="{Binding Date,Converter={StaticResource CustomDateConverter},Mode=OneWay}"
-									IsReadOnly="True"/>
-				<DataGridTextColumn Binding="{Binding Title}" IsReadOnly="True"/>
+									IsReadOnly="True" IsVisible="False"/>
+				<DataGridTextColumn Binding="{Binding Title}" Width="*" IsReadOnly="True"/>
 			</DataGrid.Columns>
 		</DataGrid>
 	</Grid>

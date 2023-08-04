@@ -64,6 +64,7 @@
 								<ColumnDefinition Width="*"/>
 								<ColumnDefinition Width="Auto"/>
 								<ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
 							</Grid.ColumnDefinitions>
 							<Grid Grid.Column="0">
 								<TextBlock Classes="NormalInput"
@@ -79,7 +80,17 @@
 									   Margin="20,0"
 									   Opacity="0.7"/>
 							</Grid>
-							<Button Grid.Column="1"
+                            <Button Grid.Column="1"
+                                    Command="{Binding GptChatConversationListCommand}"
+                                    Classes="ImageButton"
+                                    VerticalAlignment="Center"
+                                    Padding="4,0"
+                                    Margin="4,0,2,0">
+                                <Image Classes="ButtonIcon"
+                                       Source="/Assets/iconUpdate.png"
+                                       VerticalAlignment="Center"/>
+                            </Button>
+							<Button Grid.Column="2"
 									Flyout="{StaticResource ChatLogMenuFlyout}"
 									Classes="ImageButton"
 									VerticalAlignment="Center"
@@ -89,7 +100,7 @@
 									   Source="/Assets/iconSave.png"
 									   VerticalAlignment="Center"/>
 							</Button>
-							<Button Grid.Column="2"
+							<Button Grid.Column="3"
 									Command="{Binding DeleteChatLogCommand}"
 									Classes="ImageButton"
 									VerticalAlignment="Center"
@@ -223,7 +234,6 @@
 		<MenuFlyout x:Key="ChatLogMenuFlyout" Placement="Bottom">
 			<MenuItem Header="Import from CSV" Command="{Binding ImportChatLogCommand}"/>
 			<MenuItem Header="Export to CSV" Command="{Binding ExportChatLogCommand}"/>
-            <MenuItem Header="同步云端列表" Command="{Binding GptChatConversationListCommand}"/>
 		</MenuFlyout>
 	</UserControl.Resources>
 </UserControl>

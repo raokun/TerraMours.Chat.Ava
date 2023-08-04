@@ -53,7 +53,7 @@ namespace TerraMours.Chat.Ava.Views {
         private double _previousWidth;
 
         private async void MainWindow_Loaded(object sender,RoutedEventArgs e) {
-            var settings = await LoadAppSettingsAsync();
+            var settings = AppSettings.Instance;
 
             if (File.Exists(Path.Combine(settings.AppDataPath, "settings.json"))) {
                 this.Width = settings.Width - 1;

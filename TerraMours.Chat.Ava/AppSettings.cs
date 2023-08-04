@@ -72,6 +72,10 @@ namespace TerraMours.Chat.Ava {
         //服务端接口配置
         public string BaseUrl { get; set; }
 
+        public string CurrentUserName { get; set; }
+
+        public string CurrentPassWord { get; set; }
+
         // DefaultSetting
         public AppSettings() {
             EditorMode = false;
@@ -118,6 +122,10 @@ namespace TerraMours.Chat.Ava {
             MaxContentLengthIsEnable = false;
 
             BaseUrl = "https://api.terramours.site";
+
+            //登陆名
+            CurrentUserName = "";
+            CurrentPassWord = "";
         }
 
         private string GetAppDataDirectory() {

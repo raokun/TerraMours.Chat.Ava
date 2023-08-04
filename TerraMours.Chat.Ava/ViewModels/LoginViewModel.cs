@@ -20,7 +20,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
             LoginCommand = ReactiveCommand.CreateFromTask(Login);
             ExitCommand = ReactiveCommand.Create(Exit);
         }
-
+        private AppSettings _appSettings => AppSettings.Instance;
         #region 字段
         private string _userAccount;
         public string UserAccount {
@@ -65,7 +65,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 return;
             }
-
+            AppSettings.Instance.CurrentUserName = UserAccount;
             VMLocator.AppToken = res.Data.Token;
             VMLocator.LoginViewModel.LoginToMainAction?.Invoke();
         }
