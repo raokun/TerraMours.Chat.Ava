@@ -3,6 +3,7 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -19,6 +20,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
         public LoginViewModel() {
             LoginCommand = ReactiveCommand.CreateFromTask(Login);
             ExitCommand = ReactiveCommand.Create(Exit);
+            getLastUser();
         }
         private AppSettings _appSettings => AppSettings.Instance;
         #region 字段
@@ -41,6 +43,22 @@ namespace TerraMours.Chat.Ava.ViewModels {
         #endregion
 
         #region 方法
+
+        private  void getLastUser()
+        {
+            var settings = AppSettings.Instance;
+            if (File.Exists(Path.Combine(settings.AppDataPath, "user.dat"))){
+                UserAccount= File.ReadAllText(Path.Combine(settings.AppDataPath, "user.dat"));
+            }
+        }
+        private void SaveUser(string userName) {
+            var settings = AppSettings.Instance;
+            if (!Directory.Exists(settings.AppDataPath)) {
+                Directory.CreateDirectory(settings.AppDataPath);
+            }
+                File.WriteAllText(Path.Combine(settings.AppDataPath, "user.dat"),userName);
+        }
+
         private async Task Login() {
             if (string.IsNullOrEmpty(UserAccount) || string.IsNullOrEmpty(UserPassword)) {
                 var dialog = new ContentDialog() {
@@ -65,7 +83,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 await VMLocator.MainViewModel.ContentDialogShowAsync(dialog);
                 return;
             }
-            AppSettings.Instance.CurrentUserName = UserAccount;
+            SaveUser(UserAccount);
             VMLocator.AppToken = res.Data.Token;
             VMLocator.LoginViewModel.LoginToMainAction?.Invoke();
         }
