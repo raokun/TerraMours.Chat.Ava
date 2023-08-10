@@ -10,83 +10,87 @@
 			 xmlns:ctxt="clr-namespace:ColorTextBlock.Avalonia;assembly=ColorTextBlock.Avalonia"
              x:Class="TerraMours.Chat.Ava.Views.ChatView">
 	<Grid>
-		<ScrollViewer Name="Scroll" Margin="0,10,0,0">
+		<ScrollViewer Name="Scroll" Margin="0,10,0,0" >
+
 			<Grid>
 				<ItemsControl Width="{Binding Width,ElementName=Scroll}" ItemsSource="{Binding ChatHistory}">
 					<ItemsControl.ItemTemplate>
 						<DataTemplate>
-							<Border
+							<StackPanel Orientation="Vertical">
+								<TextBlock Text="{Binding CreateDate}" />
+								<Border
 							   Name="MessageBorder"
 							   Background="{Binding Role, Converter={StaticResource ChatBackgroundConverter}}"
 							   HorizontalAlignment="Left"
 							   Padding="5"
 							   Margin="20,5,20,20"
 							   CornerRadius="8,8,8,0">
-								<md:MarkdownScrollViewer
-                                    VerticalAlignment="Stretch"
-                                    MarkdownStyleName="Standard"
-                                    SaveScrollValueWhenContentUpdated="True"
-									TextElement.FontSize="16"
-									TextElement.Foreground="White"
-									TextElement.FontFamily="{StaticResource diyFont}"
-                                    Markdown="{Binding Message}">
-									<md:MarkdownScrollViewer.Styles>
-										<Style Selector="ctxt|CCode">
-											<Style.Setters>
-												<Setter Property="BorderBrush"         Value="Green"/>
-												<Setter Property="BorderThickness"     Value="2"/>
-												<Setter Property="Padding"             Value="2"/>
-												<Setter Property="MonospaceFontFamily" Value="Meiryo" />
-												<Setter Property="Foreground"          Value="DarkGreen" />
-												<Setter Property="Background"          Value="LightGreen" />
-											</Style.Setters>
-										</Style>
+									<md:MarkdownScrollViewer
+										VerticalAlignment="Stretch"
+										MarkdownStyleName="Standard"
+										SaveScrollValueWhenContentUpdated="True"
+										TextElement.FontSize="16"
+										TextElement.Foreground="White"
+										TextElement.FontFamily="{StaticResource diyFont}"
+										Markdown="{Binding Message}">
+										<md:MarkdownScrollViewer.Styles>
+											<Style Selector="ctxt|CCode">
+												<Style.Setters>
+													<Setter Property="BorderBrush"         Value="Green"/>
+													<Setter Property="BorderThickness"     Value="2"/>
+													<Setter Property="Padding"             Value="2"/>
+													<Setter Property="MonospaceFontFamily" Value="Meiryo" />
+													<Setter Property="Foreground"          Value="DarkGreen" />
+													<Setter Property="Background"          Value="LightGreen" />
+												</Style.Setters>
+											</Style>
 
-										<Style Selector="Border.CodeBlock">
-											<Style.Setters>
-												<Setter Property="BorderBrush" Value="#E2E6EA" />
-												<Setter Property="BorderThickness" Value="0,30,0,0" />
-												<Setter Property="Margin" Value="5,0,5,0" />
-												<Setter Property="Background" Value="Black" />
-											</Style.Setters>
-										</Style>
+											<Style Selector="Border.CodeBlock">
+												<Style.Setters>
+													<Setter Property="BorderBrush" Value="#E2E6EA" />
+													<Setter Property="BorderThickness" Value="0,30,0,0" />
+													<Setter Property="Margin" Value="5,0,5,0" />
+													<Setter Property="Background" Value="Black" />
+												</Style.Setters>
+											</Style>
 
-										<Style Selector="TextBlock.CodeBlock">
-											<Style.Setters>
-												<Setter Property="Background" Value="Black" />
-											</Style.Setters>
-										</Style>
+											<Style Selector="TextBlock.CodeBlock">
+												<Style.Setters>
+													<Setter Property="Background" Value="Black" />
+												</Style.Setters>
+											</Style>
 
-										<Style Selector="avedit|TextEditor">
-											<Style.Setters>
-												<Setter Property="BorderBrush" Value="#E2E6EA" />
-												<Setter Property="Background" Value="Black" />
-												<Setter Property="Padding" Value="5"></Setter>
-											</Style.Setters>
-										</Style>
+											<Style Selector="avedit|TextEditor">
+												<Style.Setters>
+													<Setter Property="BorderBrush" Value="#E2E6EA" />
+													<Setter Property="Background" Value="Black" />
+													<Setter Property="Padding" Value="5"></Setter>
+												</Style.Setters>
+											</Style>
 
-									</md:MarkdownScrollViewer.Styles>
-									<md:MarkdownScrollViewer.ContextMenu>
-										<ContextMenu Padding="3">
-											<MenuItem>
-												<MenuItem.Header>
-													<TextBlock>编辑</TextBlock>
-												</MenuItem.Header>
-											</MenuItem>
-											<MenuItem Tag="{Binding ChatRecordId}" Click="DeleteClick">
-												<MenuItem.Header>
-													<TextBlock>删除</TextBlock>
-												</MenuItem.Header>
-											</MenuItem>
-											<MenuItem Tag="{Binding Message}" Click="CopyClick">
-												<MenuItem.Header>
-													<TextBlock>复制</TextBlock>
-												</MenuItem.Header>
-											</MenuItem>
-										</ContextMenu>
-									</md:MarkdownScrollViewer.ContextMenu>
-								</md:MarkdownScrollViewer>
-							</Border>
+										</md:MarkdownScrollViewer.Styles>
+										<md:MarkdownScrollViewer.ContextMenu>
+											<ContextMenu Padding="3">
+												<MenuItem>
+													<MenuItem.Header>
+														<TextBlock>编辑</TextBlock>
+													</MenuItem.Header>
+												</MenuItem>
+												<MenuItem Tag="{Binding ChatRecordId}" Click="DeleteClick">
+													<MenuItem.Header>
+														<TextBlock>删除</TextBlock>
+													</MenuItem.Header>
+												</MenuItem>
+												<MenuItem Tag="{Binding Message}" Click="CopyClick">
+													<MenuItem.Header>
+														<TextBlock>复制</TextBlock>
+													</MenuItem.Header>
+												</MenuItem>
+											</ContextMenu>
+										</md:MarkdownScrollViewer.ContextMenu>
+									</md:MarkdownScrollViewer>
+								</Border>
+							</StackPanel>
 						</DataTemplate>
 					</ItemsControl.ItemTemplate>
 				</ItemsControl>
