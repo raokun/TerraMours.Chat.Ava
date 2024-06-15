@@ -2,11 +2,11 @@
 基于Avalonia的智能AI会话项目，接入ChatGpt
 ## 1.nuget包引用
 
-![image-20230717150959484](https://www.raokun.top/upload/2023/07/image-20230717150959484.png)
+![image-20230717150959484](ref.png)
 
 ### 引用包介绍：
 
-* Avalonia  版本11.0.0-rc1.1，稳定版本，其他基于avalonia的包要选用支持11.0.0-rc1.1的版本
+* Avalonia  版本11.0.8，稳定版本，其他基于avalonia的包要选用支持11.0.8的版本
 
 * Avalonia.ReactiveUI  MVVM 架构模式的工具库，创建avalonia项目时会提示选择。
 
@@ -25,24 +25,29 @@
   
 
 ```xml
-<PackageReference Include="Avalonia" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.Desktop" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0-rc1.1" />
+<PackageReference Include="Avalonia" Version="11.0.10" />
+<PackageReference Include="Avalonia.Desktop" Version="11.0.10" />
+<PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.10" />
+<PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.10" />
 <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.ReactiveUI" Version="11.0.0-rc1.1" />
-<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.0-rc1.1" />
-<PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.0-rc1.1" />
-<PackageReference Include="DialogHost.Avalonia" Version="0.7.4" />
-<PackageReference Include="FluentAvaloniaUI" Version="2.0.0-rc1" />
-<PackageReference Include="System.Data.SQLite" Version="1.0.117" />
-<PackageReference Include="CsvHelper" Version="30.0.1" />
-<PackageReference Include="Markdown.Avalonia" Version="11.0.0-d1" />
-<PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.0-d1" />
-<PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.0-d1" />
-<PackageReference Include="Betalgo.OpenAI" Version="7.1.2-beta" />
+<PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
+<PackageReference Include="Avalonia.Xaml.Interactivity" Version="11.0.10.9" />
+<PackageReference Include="Avalonia.ReactiveUI" Version="11.0.10" />
+<PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
+<PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
+<PackageReference Include="DialogHost.Avalonia" Version="0.7.7" />
+<PackageReference Include="FluentAvaloniaUI" Version="2.0.5" />
+<PackageReference Include="System.Data.SQLite" Version="1.0.118" />
+<PackageReference Include="CsvHelper" Version="32.0.3" />
+<PackageReference Include="Markdown.Avalonia" Version="11.0.2" />
+<PackageReference Include="Markdown.Avalonia.SyntaxHigh" Version="11.0.2" />
+<PackageReference Include="Markdown.Avalonia.Tight" Version="11.0.2" />
+<PackageReference Include="Betalgo.OpenAI" Version="8.4.0" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.6" />
+<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.6.23329.4">
+<PrivateAssets>all</PrivateAssets>
+<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+</PackageReference>
 ```
 
 

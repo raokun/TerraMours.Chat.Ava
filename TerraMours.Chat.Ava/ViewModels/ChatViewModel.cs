@@ -103,6 +103,15 @@ namespace TerraMours.Chat.Ava.ViewModels {
             get => _chatMessage;
             set => this.RaiseAndSetIfChanged(ref _chatMessage, value);
         }
+
+        private string _curAsk;
+
+        public string CurAsk
+        {
+            get => _curAsk;
+            set => this.RaiseAndSetIfChanged(ref _curAsk, value);
+        }
+
         #endregion
         #endregion
         #region 事件
