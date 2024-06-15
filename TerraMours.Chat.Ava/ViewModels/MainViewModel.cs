@@ -407,6 +407,7 @@ namespace TerraMours.Chat.Ava.ViewModels {
                 VMLocator.ChatViewModel.ChatHistory.Add(assistant);
                 await VMLocator.ChatDbcontext.ChatMessages.AddAsync(assistant);
                 await VMLocator.ChatDbcontext.SaveChangesAsync();
+                VMLocator.ChatViewModel.CurAsk = message;
                 VMLocator.MainViewModel.PostMessage = "";
             }
             catch (Exception e)
